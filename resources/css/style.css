@@ -44,10 +44,22 @@ img {
 
 
 
-#skills, #hobbies, #portfolio, #contact {
+#skills #hobbies  #contact {
     background-color: #F1AA90;
+    padding: 5%;
 }
-
+#hobbies {
+    background-color: #F1AA90;
+    padding: 5%;
+}
+#portfolio {
+    background-color: #F1AA90;
+    padding: 5%;
+}
+#contact {
+    background-color: #F1AA90;
+    padding: 5%;
+}
 
 
 
@@ -247,7 +259,7 @@ footer {
 }
 footer.second {
     border-top: 1px solid #AADCD2;
-    background-color: #544B59;
+    background-color: #222222;
     max-height: 55px;
     margin: 0;
 }
