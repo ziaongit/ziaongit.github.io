@@ -338,6 +338,13 @@ body {
 .address {
     padding-top: 40px;
 }
+.alert {
+    color: #F5F5F5;
+    padding: 7px;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    background-color: #6991AC;
+}
 /*************************
     CONTACT END
 **************************/
