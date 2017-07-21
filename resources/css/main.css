@@ -103,9 +103,55 @@ body {
 **************************/
 
 /*************************
-    SKILLS START
+    ABOUT ME START
+**************************/
+#about {
+    padding: 20px 0;
+    clear: both;
+    margin-top: -20px;
+}
+.hero-unit {
+    background-image:url('../images/about-me.jpg');
+    background-size:cover;
+    background-color: #EEEEEE;
+    height:100%;
+    padding: 50px 0;
+  
+  }
+.hero-unit .btn-success {
+    background-color: #F1AA90;
+    border-color: #FFFFFF;
+}
+.hero-unit h2 {
+    font-size: 30px;
+    color: #FFFFFF;
+   
+}
+
+.hero-unit h4 {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+}
+.hero-unit p {
+    padding: 8px 0;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-size: 16px;
+    color: #F0F0F0;
+}
+.fill{width:100%;height:350px;background-position:center;background-size:cover;
+}
+.resume {
+    text-align: center;
+    padding: 10px 0 10px 0;
+}
+/*************************
+    ABOUT ME END
 **************************/
 
+/*************************
+    SKILLS START
+**************************/
 .one-fourth {
     text-align: center;
     background-color: transparent;
@@ -171,50 +217,22 @@ body {
 **************************/
 
 /*************************
-    ABOUT ME START
+    PORTFOLIO START
 **************************/
-#about {
-    padding: 20px 0;
-    clear: both;
-    margin-top: -20px;
-}
-.hero-unit {
+#portfolio {
     background-image:url('../images/about-me.jpg');
     background-size:cover;
     background-color: #EEEEEE;
     height:100%;
-    padding: 50px 0;
-  
-  }
-.hero-unit .btn-success {
-    background-color: #F1AA90;
-    border-color: #FFFFFF;
 }
-.hero-unit h2 {
-    font-size: 30px;
-    color: #FFFFFF;
-   
+.portfolio {
+    padding:80px;
 }
-
-.hero-unit h4 {
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 20px;
-}
-.hero-unit p {
-    padding: 8px 0;
-    font-family: "Source Sans Pro", Helvetica, sans-serif;
-    font-size: 16px;
-    color: #F0F0F0;
-}
-.fill{width:100%;height:350px;background-position:center;background-size:cover;
-}
-.resume {
-    text-align: center;
-    padding: 10px 0 10px 0;
+.portfolio-item {
+    margin-bottom: 25px;
 }
 /*************************
-    ABOUT ME END
+    PORTFOLIO END
 **************************/
 
 /*************************
@@ -244,6 +262,84 @@ body {
 }
 /*************************
     HOBBIES END
+**************************/
+
+/*************************
+    CONTACT START
+**************************/
+#contact {
+    background-image:url('../images/about-me.jpg');
+    background-size:cover;
+    background-color: #EEEEEE;
+    height:100%;
+}
+.about-me{
+    text-align: center;
+}
+.about-me h1{
+    font-size: 25px;
+}
+#contactForm .btn-success {
+    background-color: #F1AA90;
+    border-color: #FFFFFF;
+}
+#contactForm {
+    padding: 30px 0;
+}
+#contactForm#contact .section-heading {
+    color: white;
+}
+#contact .form-group {
+    margin-bottom: 15px;
+}
+#contact .form-group input,
+#contactForm#contact .form-group textarea {
+    padding: 10px;
+}
+#contact .form-group input.form-control {
+    height: auto;
+}
+#contact .form-group textarea.form-control {
+    height: 200px;
+}
+#contact .form-control:focus {
+    border-color: #fed136;
+    box-shadow: none;
+}
+#contact ::-webkit-input-placeholder {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #ccc;
+}
+#contact :-moz-placeholder {
+    /* Firefox 18- */
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #eeeeee;
+}
+#contact ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #eeeeee;
+}
+#contact :-ms-input-placeholder {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #eeeeee;
+}
+#contact .text-danger {
+    color: #e74c3c;
+}
+.address {
+    padding-top: 40px;
+}
+/*************************
+    CONTACT END
 **************************/
 
 /*************************
