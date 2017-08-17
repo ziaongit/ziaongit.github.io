@@ -1,26 +1,23 @@
 
 // Navbar start
 window.addEventListener("hashchange", function() { scrollBy(0, -80) })
-
-
  $(".nav li").on("click", function() {
-      $(".nav li").removeClass("active");
-      $(this).addClass("active");
-	});
-
+      $(".nav li").removeClass("active not-active");
+      $(this).addClass("active not-active");
+});
 $("nav ul li a[href^='#']").on('click', function(e) {
-   e.preventDefault();
-   var hash = this.hash;
-   $('html, body').animate({
-       scrollTop: $(hash).offset().top
-     }, 500, function(){
+		e.preventDefault();
+		var hash = this.hash;
+		$('html, body').animate({
+			scrollTop: $(hash).offset().top
+			}, 500, function(){
 
-       window.location.hash = hash;
-     });
+			window.location.hash = hash;
+     	});
 
 });
-
 // Navbar end
+
 // Contact form start
 var $contactForm = $('#contactForm');
 $contactForm.submit(function(e) {

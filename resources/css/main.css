@@ -52,6 +52,10 @@ body {
 .navbar-nav>li>.dropdown-menu {
 	z-index: 9999;
 }
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
 /*************************
     NAVBAR END
 **************************/
