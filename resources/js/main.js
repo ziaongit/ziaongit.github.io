@@ -19,3 +19,13 @@ $contactForm.submit(function(e) {
 		}
 	});
 });
+
+//jQuery to collapse the navbar on scroll
+
+
+window.addEventListener("hashchange", function() { scrollBy(0, -80) })
+
+ $(".nav li").on("click", function() {
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
+    });
