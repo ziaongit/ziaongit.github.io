@@ -1,3 +1,15 @@
+
+// Navbar start
+window.addEventListener("hashchange", function() { scrollBy(0, -80) })
+
+
+ $(".nav li").on("click", function() {
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
+	});
+
+// Navbar end
+// Contact form start
 var $contactForm = $('#contactForm');
 $contactForm.submit(function(e) {
 	e.preventDefault();
@@ -19,13 +31,4 @@ $contactForm.submit(function(e) {
 		}
 	});
 });
-
-//jQuery to collapse the navbar on scroll
-
-
-window.addEventListener("hashchange", function() { scrollBy(0, -80) })
-
- $(".nav li").on("click", function() {
-      $(".nav li").removeClass("active");
-      $(this).addClass("active");
-    });
+// Contact form end
