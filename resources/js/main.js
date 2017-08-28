@@ -1,4 +1,3 @@
-
 // Navbar start
 window.addEventListener("hashchange", function() { scrollBy(0, -80) })
  $(".nav li").on("click", function() {
