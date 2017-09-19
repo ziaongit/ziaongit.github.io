@@ -4,7 +4,10 @@ $(document).ready(function() {
         url: "dist/xml/products.xml",
         dataType: "xml",
         success: function(xml) {
-            generateMenu(xml)
+            
+            generateMenu(xml);
+
+            navigateMenu();
         }
     });
 });
@@ -44,7 +47,7 @@ function generateMenu(xml) {
 function generateLiNode(text, image) {
 
     if (image) {
-        return $('<li id="product"><a data-image="' + image + '" onmouseover="displayImage(\'' + image + '\')" href="#">' + text + '</a></li>');
+        return $('<li id="product"><a data-image="' + image + '" onclick="displayImage(\'' + image + '\')" href="#">' + text + '</a></li>');
     } else {
         return $('<li id="product"><a href="#">' + text + '</a></li>')
     }
@@ -52,4 +55,15 @@ function generateLiNode(text, image) {
 
 function displayImage(imgSrc) {
     $('#productImg').html('<img src="dist/img/' + imgSrc + '"/>');
+}
+
+function navigateMenu(){
+    $('nav ul li').on('click',function(e){
+        e.stopPropagation();
+        
+        $(this).siblings('li').not(this).find('ul').css('display','none');
+        
+        $(this).children('ul').css('display','block');
+    });
+
 }

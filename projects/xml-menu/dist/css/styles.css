@@ -108,8 +108,10 @@ nav ul li:hover>a {
     border-radius: 20px;
 }
 
-nav ul li:hover>ul {
-    display: block;
+nav ul li:hover > a {
+    color: #ffffff;
+    background: #205791;
+    border-radius: 20px;
 }
 
 nav ul ul {
