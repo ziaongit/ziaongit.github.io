@@ -4,7 +4,7 @@ $(document).ready(function() {
         url: "dist/xml/products.xml",
         dataType: "xml",
         success: function(xml) {
-            
+
             generateMenu(xml);
 
             navigateMenu();
@@ -57,13 +57,17 @@ function displayImage(imgSrc) {
     $('#productImg').html('<img src="dist/img/' + imgSrc + '"/>');
 }
 
-function navigateMenu(){
-    $('nav ul li').on('click',function(e){
+function navigateMenu() {
+    $('nav ul li').on('click', function(e) {
         e.stopPropagation();
-        
-        $(this).siblings('li').not(this).find('ul').css('display','none');
-        
-        $(this).children('ul').css('display','block');
+
+        $(this).siblings('li').not(this).find('ul').css('display', 'none');
+        $(this).children('ul').css('display', 'block');
+        $(this).children('ul').find('ul').css("display", "none");
+    });
+
+    $("body").click(function(e) {
+        $(document).find('nav ul ul').css('display', 'none');
     });
 
 }
