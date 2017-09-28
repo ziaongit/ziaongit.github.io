@@ -6,7 +6,7 @@
 
 function parseXML() {
   $.ajax({
-      url: "RETTS-ESS-2017-Chinese.xml",
+      url: "vendor/xml/RETTS-ESS-2017-Chinese.xml",
       dataType: "xml",
       success: function(data) {
           parseXml(data);
