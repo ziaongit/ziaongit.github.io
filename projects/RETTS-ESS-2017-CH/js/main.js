@@ -6,7 +6,7 @@
 
 function parseXML() {
   $.ajax({
-      url: "../RETTS-ESS-2017-Chinese.xml",
+      url: "https://github.com/ziaongit/ziaongit.github.io/blob/master/projects/RETTS-ESS-2017-CH/RETTS-ESS-2017-Chinese.xml",
       dataType: "xml",
       success: function(data) {
           parseXml(data);
