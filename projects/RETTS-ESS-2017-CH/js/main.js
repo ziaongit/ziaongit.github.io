@@ -6,7 +6,7 @@
 
 function parseXML() {
   $.ajax({
-      url: "RETTS-ESS-2017-CH/RETTS-ESS-2017-Chinese.xml",
+      url: "../RETTS-ESS-2017-Chinese.xml",
       dataType: "xml",
       success: function(data) {
           parseXml(data);
@@ -19,11 +19,9 @@ function parseXml(xml) {
 
   $(xml).find("essPackage").each(function() {
   $("#RETTS-ESS-2017-display").append(`
-      <div class="card">
-        <div class="card-header">
-        <h5 class="card-title">RETTS ESS 2017 - 中文</h5>
-        </div>
-        <div class="card-block">
+        <div class="jumbotron">
+          <h1 class="display-3">RETTS ESS 2017 - 中文</h1>
+          <hr class="my-4">
           <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Version:</b> ${$(this).find('version').text()}</li>
             <li class="list-group-item"><b>Type:</b> ${$(this).find('type').text()}</li>
@@ -36,27 +34,36 @@ function parseXml(xml) {
             <li class="list-group-item"><b>Revision Date:</b> ${$(this).find('revisionDate').text()}</li>
           </ul>
         </div>
-      </div>
       `);
   });
 
-  $(xml).find("ess").each(function() {
-    $("#RETTS-ESS-2017-display").append(`
-    <div class="card mb-2">
-    <div class="card-header">
-      <h4>ESS: ${$(this).find('number').text()}</h4>
-    </div>
-    <div class="card-block">
-      <ul>
-        <li class="list-group-item">${$(this).find('essSymptom').find('description').text()} </li>
-        <li class="list-group-item">${$(this).find('essSymptom').find('essRisklevel').text()}</li>
-      </ul>
-    </div>
-    <div class="card-footer text-muted">上次保存的日期: ${$(this).find('lastSavedDate').text()}</div>
-  </div>
-    `);
+  $(xml).find('ess').children('essSymptom').each(function() {
+    
   });
 
+  $(xml).find("ess").each(function() {
+    $("#RETTS-ESS-2017-display").append(syptomsUl($(this).find("number").text(), $(this).find("lastSavedDate").text()));
+    $("#symptomCard").append(syptoms($(this).find("essSymptom").children('description').text(), $(this).find("essSymptom").children('sortNumber').text()));
+  });
+
+}
+
+function syptomsUl(number, lastSavedDate){
+  return (`
+    <div class="card mb-2">
+      <div class="card-header">
+        <h4>ESS: ${number}</h4>
+      </div>
+      <div class="card-block" id="symptomCard">
+      
+      </div>
+      <div class="card-footer text-muted">上次保存的日期: ${lastSavedDate}</div>
+    </div>
+  `);
+}
+
+function syptoms(description, sortNumber) {
+  return $('<ul class="list-group col-md-4" style="padding: 5px 10px;"><li class="list-group-item active">ESS Symptom</li><li class="list-group-item">'+sortNumber+': ' + description + '</li>');
 }
 
 
