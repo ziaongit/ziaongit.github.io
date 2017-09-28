@@ -6,7 +6,7 @@
 
 function parseXML() {
   $.ajax({
-      url: "../RETTS-ESS-2017-Chinese.xml",
+      url: "RETTS-ESS-2017-Chinese.xml",
       dataType: "xml",
       success: function(data) {
           parseXml(data);
@@ -37,10 +37,7 @@ function parseXml(xml) {
       `);
   });
 
-  $(xml).find('ess').children('essSymptom').each(function() {
-    
-  });
-
+  
   $(xml).find("ess").each(function() {
     $("#RETTS-ESS-2017-display").append(syptomsUl($(this).find("number").text(), $(this).find("lastSavedDate").text()));
     $("#symptomCard").append(syptoms($(this).find("essSymptom").children('description').text(), $(this).find("essSymptom").children('sortNumber').text()));
