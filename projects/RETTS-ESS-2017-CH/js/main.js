@@ -7,6 +7,7 @@
 function parseXML() {
   $.ajax({
       url: "vendor/xml/RETTS-ESS-2017-Chinese.xml",
+      //url: "../RETTS-ESS-2017-En.xml",
       dataType: "xml",
       success: function(data) {
           parseXml(data);
@@ -39,29 +40,37 @@ function parseXml(xml) {
 
   
   $(xml).find("ess").each(function() {
-    $("#RETTS-ESS-2017-display").append(syptomsUl($(this).find("number").text(), $(this).find("lastSavedDate").text()));
-    $("#symptomCard").append(syptoms($(this).find("essSymptom").children('description').text(), $(this).find("essSymptom").children('sortNumber').text()));
+    $("#RETTS-ESS-2017-display").append(syptomsUl($(this).find("number").text(), $(this).find("lastSavedDate").text(), $(this).children("essSymptom").children('description').text(), $(this).children("essSymptom").find('sortNumber').text()));
+    //$("#symptomCard").append(syptoms($(this).find("essSymptom").children('description').text(), $(this).find("essSymptom").children('sortNumber').text()));
   });
 
 }
 
-function syptomsUl(number, lastSavedDate){
+function syptomsUl(number, lastSavedDate,essSymptom,sortNumber){
   return (`
     <div class="card mb-2">
       <div class="card-header">
         <h4>ESS: ${number}</h4>
       </div>
       <div class="card-block" id="symptomCard">
-      
+        <ul class="list-group col-md-4" style="padding: 5px 10px;">
+          <li class="list-group-item active">ESS Symptom</li>
+          <li class="list-group-item">${addList(essSymptom, sortNumber)}</li>
+        </ul>
       </div>
       <div class="card-footer text-muted">上次保存的日期: ${lastSavedDate}</div>
     </div>
   `);
 }
 
-function syptoms(description, sortNumber) {
-  return $('<ul class="list-group col-md-4" style="padding: 5px 10px;"><li class="list-group-item active">ESS Symptom</li><li class="list-group-item">'+sortNumber+': ' + description + '</li>');
+function addList(essSymptom, sortNumber) {
+  for(var i=0; i<=essSymptom.length; i++){
+      return `${essSymptom}`;
+  }
 }
+// function syptoms(description, sortNumber) {
+//   return $('<ul class="list-group col-md-4" style="padding: 5px 10px;"><li class="list-group-item active">ESS Symptom</li><li class="list-group-item">'+sortNumber+': ' + description + '</li>');
+// }
 
 
 function generatePDF(){
