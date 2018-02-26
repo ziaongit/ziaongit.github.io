@@ -1,0 +1,146 @@
+/* General styles start
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px;
+  font-family: Roboto;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+/* General styles end
+-------------------------------------------------- */
+
+/* Logo styles start
+-------------------------------------------------- */
+.logo {
+    text-align: center;
+    font-family: Anton;
+    font-size: 30px;
+    color: #d9534f;
+    padding: 10px 0px;
+}
+/* Logo styles end
+-------------------------------------------------- */
+
+/* Movies filter styles start
+-------------------------------------------------- */
+.movies_filters {
+  border-bottom: 1px solid #cacaca;
+}
+.movies_filters .open {
+  text-align: center;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 300;
+  padding: 10px;
+}
+.movies_filters .open .fa {
+  margin-right: 5px;
+  color: #d9534f;
+  transition: all 0.2s ease;
+}
+.movies_filters .open.active .fa {
+  -webkit-transform: rotate(-100deg);
+}
+.movies_filters .filter_container {
+  border-top:1px solid #cacaca;
+  text-align: center;
+  padding: 10px;
+  background: #f3f3f3;
+  display: none;
+}
+.movies_filters .filter_container label {
+  font-size: 13px;
+}
+.movies_filters .filter_container select {
+  margin-right: 30px;
+}
+/* Movies fileter styles end
+-------------------------------------------------- */
+.movies_content {
+  box-sizing: border-box;
+  padding: 20px;
+}
+.movie_item {
+  margin-bottom: 15px;
+  border: 1px solid #efefef;
+}
+.movies_content .movie_item .header {
+  display: flex;
+}
+.movies_content .movie_item .header .left{
+  flex: 1;
+}
+.movies_content .movie_item .header .right{
+  position: relative;
+  padding: 10px;
+  width: 100%;
+}
+.movies_content .movie_item .header .left img {
+  width: 150px;
+}
+.movies_content .movie_item .header .right h3 {
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom:1px solid #dadada;
+  color: #f44336;
+}
+.movies_content .movie_item .header .right .node {
+  font-size: 14px;
+  margin-top: 10px;
+}
+.movies_content .movie_item .header .right .node span {
+  font-weight: bold;
+}
+.movies_content .movie_item .header .right .show_decs {
+  position: absolute;
+  font-size: 13px;
+  background: #cacaca;
+  padding: 5px 10px;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.movies_content .movie_item .description {
+  background: #efefef;
+  padding: 20px;
+  font-size: 14px;
+  display: none;
+}
+
+/* Movies styles start
+-------------------------------------------------- */
+
+/* Movies styles end
+-------------------------------------------------- */
+
+/*  styles start
+-------------------------------------------------- */
+
+/*  styles end
+-------------------------------------------------- */
