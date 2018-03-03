@@ -1,0 +1,30 @@
+{
+  "name": "githubprofilefinder",
+  "description": "This is a simple application that fetches and displays Github user profile information info and the latest repositories.",
+  "main": "index.js",
+  "authors": [
+    "Zia"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Qeury",
+    "AjaxJ"
+  ],
+  "homepage": "https://github.com/ziaullahkhan/GitHubProfileFinder",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "jquery": "^3.2.1"
+  }
+}

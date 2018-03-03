@@ -1,0 +1,20 @@
+{
+  "name": "Customer-Card-Generator",
+  "homepage": "https://github.com/ziaullahkhan/Customer-Card-Generator",
+  "authors": [
+    "'Zia <'zia_gt@yahoo.com'>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

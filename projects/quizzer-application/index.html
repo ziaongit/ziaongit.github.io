@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="HTML, CSS, JavaScript, jQuery">
+    <meta name="author" content="Zia Khan">
+    <meta name="Quizzer Application" content="If the user clicks on start quiz it will take the user to a new panel and show user nice animation of the options, and whenever user select, it will show order start selected and the user can then move to next question. If the user did not select any answer and click move to next question, he/she will get an error message. At the final stage, the user will get Thank You message.">
+    <title>Quizzer Application</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="resources/css/style.css">
+    <!-- Google fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+</head>
+<body>
+    <div class="content_container">
+        <!-- Panel 1 -->
+        <div class="item panel_one hidden" data-panel="0">
+            <div class="wrapper">
+                <h1 class="hidden">Quizzer</h1>
+                <div class="start_quiz">
+                    Start Quiz
+                </div>
+            </div>
+        </div>
+        <!-- Panel 2 -->
+        <div class="item panel_two hidden" data-panel="1">
+            <div class="wrapper">
+                <h3>How do you drink tea?</h3>
+                <div class="options">
+                    <div>Warm</div>
+                    <div>Cold</div>
+                    <div>I don't drink</div>
+                </div>
+                <div class="next_question" data-next="2">Next Question</div>
+            </div>
+        </div>
+        <!-- Panel 3 -->
+        <div class="item panel_three hidden" data-panel="2">
+            <div class="wrapper">
+                <h3>What kind of weather do you like?</h3>
+                <div class="options">
+                    <div>Rainy weather</div>
+                    <div>Sunny weather</div>
+                    <div>I don't know</div>
+                </div>
+                <div class="next_question" data-next="3">Next Question</div>
+            </div>
+        </div>
+
+        <!-- Panel 4 -->
+        <div class="item panel_four hidden" data-panel="3">
+            <div class="wrapper">
+                <h3>Which time do you go out for a walk?</h3>
+                <div class="options">
+                    <div>At morning</div>
+                    <div>At evening</div>
+                    <div>I don't know</div>
+                </div>
+                <div class="next_question" data-next="4">Next Question</div>
+            </div>
+        </div>
+
+        <!-- Panel 5 -->
+        <div class="item panel_five hidden" data-panel="4">
+            <div class="wrapper">
+                <h3>Which time do you go to sleep?</h3>
+                <div class="options">
+                    <div>After 10 PM</div>
+                    <div>After 12 AM</div>
+                    <div>I don't know</div>
+                </div>
+                <div class="next_question" data-next="5">Next Question</div>
+            </div>
+        </div>
+
+        <!-- Panel 6 -->
+        <div class="item panel_five hidden" data-panel="5">
+            <div class="wrapper">
+                <h3>Thank you for participating !!</h3>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="error">
+        Please make a selection
+    </div>
+    <div class="progress">
+        <div class="bar">
+
+        </div>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="resources/js/jquery-3.2.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="resources/js/jquery-ui.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="resources/js/main.js"></script>
+</body>
+</html>

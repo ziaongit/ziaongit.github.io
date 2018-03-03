@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="JavaScript, jQuery, HTML, CSS, Materialize CSS">
+    <meta name="author" content="Zia">
+    <meta name="Pomodoro Clock" content="Pomodoro Clock: With this JavaScript application, a user can start a 25 minute Pomodoro, and the timer will go off once 25 minutes has elapsed. The user can reset the clock for next Pomodoro.">
+    <title>Pomodoro Clock</title>
+    <!-- Compiled Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="resources/css/style.css">
+    
+</head>
+<body>
+    <section class="intro">
+        <div class="inner">
+            <div class="row">
+                <div class="col s12 m8 l6 offset-m2 offset-l3">
+                    <div class="card">
+                        <div class="card-content white-text">
+                            <div class="timeContent">
+                                
+                                <h3 class="text-center">Pomodoro Clock</h3>
+                                <button id="minus" class="btn-floating btn-large waves-effect waves-light red bg-color"><i class="material-icons">-</i></button>
+                                <span id="timerNumber"></span>
+                                <button id="plus" class="btn-floating btn-large waves-effect waves-light red bg-color"><i class="material-icons">+</i></button>
+                                <div class="pomodoro">
+                                    <img src="resources/images/pomodoro.png">
+                                </div>
+                                <button id="reset" class="btn waves-effect waves-light btn-large red bg-color">Reset</button>
+                            </div>
+                            <div class="breakContent">
+                                <h4 class="text-center">Braak Time</h4>
+                                <button id="breakMinus" class="btn-floating btn-large waves-effect waves-light red bg-color"><i class="material-icons">-</i></button>
+                                <span id="breakNumber"></span>
+                                <button id="breakPlus" class="btn-floating btn-large waves-effect waves-light red bg-color"><i class="material-icons">+</i></button>
+                            </div>
+                            <div class="start">
+                                <button id="start" class="btn waves-effect waves-light btn-large red bg-color">Start</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<audio id="alarm" src="resources/audios/alarm.mp3" type="audio/mpeg">
+<!-- P5 JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Compiled and minified Materialize JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+<!-- Custom JavaScript -->
+<script src="resources/js/main.js"></script>
+</body>
+</html>

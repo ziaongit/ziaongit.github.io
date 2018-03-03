@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Music Database</title>
+    <!-- Google font Roboto - Regular -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- Google font Pacifico -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <!-- Bootstrap compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Custom stylesheet -->
+    <link href="resources/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+
+        <div class="row" id="search_artist">
+            <div class="wrapper">
+                <h1>Music DB</h1>
+                <form id="form">
+                    <input type="text" placeholder="Search artist name" id="input_search">
+                </form>
+            </div>
+        </div>
+
+        <div class="row" id="album_list_container">
+
+        </div>
+
+        <div id="no_data">
+            <div class="notice notice-warning">
+                <strong>Sorry: </strong> Data not found
+            </div>
+        </div>
+
+        <div id="something_wrong">
+            <div class="notice notice-warning">
+                <strong>Sorry: </strong> Smething is wrong
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Custom JavaScript -->
+    <script src="resources/js/main.js"></script>
+  </body>
+</html>

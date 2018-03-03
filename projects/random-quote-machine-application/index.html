@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="HTML,CSS, Bootstrap, JavaScript, jQuery">
+    <meta name="author" content="Zia">
+    <meta name="Random Quote Machine Application" content="Random Quote Machine with HTML, CSS, Bootstrap, and jQuery. I a user click on a button it shows a new random quote. The user can also share out a quote by simply clicking a button on social media.">
+    <title>Random Quote Machine Application</title>
+    <!-- Bootstrap minified CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- FontAwesome CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/css/socialButtons.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+    <div class="container vertical-center">
+        <div class="col-md-10 offset-md-1 mb-2">
+            <h1>Top 100 quotes of all time.</h1>
+            <blockquote class="quote-card green-card">
+                <p id="quote">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque at, architecto culpa sint veniam temporibus!!
+                </p>
+            
+                <cite>
+                <span id="author"></span>
+                </cite>
+            </blockquote>
+            <a id="twitter" class="btn btn-lg btn-social btn-twitter"> <i class="fa fa-twitter"></i> Tweet Quote</a>
+            <button class="btn btn-success pull-right" id="randomQuote">New Quote</button>
+        </div>
+    </div>
+
+<!-- jQuery JavaScript -->
+<script src="resources/js/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Custom JavaScript -->
+<script src="resources/js/main.js"></script>
+</body>
+</html>

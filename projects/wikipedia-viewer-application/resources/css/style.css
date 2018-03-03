@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: vardana;
+    background-color: rgba(255, 16, 98, 0.51);
+}
+
+/* ========================
+    SEARCH BOX START
+==========================*/
+.search-box {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: rgb(233, 30, 99);
+    border-radius: 50px 0px 50px 50px;
+    box-shadow: 10px 0 20px 5px #e91e27;
+    transition: .5s;
+}
+.search-box .search-icon{
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 30px;
+    color: #FFF;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+.search-box .search-icon:before {
+    content: "\f002";
+    font-family: FontAwesome;
+}
+.search-box.active .search-icon:before {
+    content: "\f00d";
+    font-family: FontAwesome;
+}
+.search-box.active {
+    width: 100vw;
+    height: 100vh;
+}
+.form {
+    width: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+.form input[type="text"] {
+    width: 100%;
+    background: transparent;
+    color: #FFF;
+    border: none;
+    border-bottom: 4px solid #FFF;
+    outline: none;
+    font-size: 30px;
+    padding: 10px 0;
+}
+.search-box.active .form {
+    display: block;
+}
+.form input[type="text"]::placeholder {
+    color: #FFF;
+}
+.form .input-fields {
+    position: relative;
+}
+.form button {
+    position: absolute;
+    right: 0px;
+    top: 20%;
+}
+@media (max-width: 600px) {
+  .form input[type="text"] {
+    font-size: 70%;
+  }
+}
+@media (max-width: 800px) {
+  .form input[type="text"] {
+    font-size: 90%;
+  }
+}
+/* ========================
+    SEARCH BOX END
+==========================*/
+
+/* ========================
+    WELCOME START
+==========================*/
+.welcome {
+    text-align: center;
+}
+/* ========================
+    WELCOME END
+==========================*/
+
+/* ========================
+    WIKI RESULT START
+==========================*/
+#wikiSearchResult {
+    margin-top: 130px;
+}
+@media (max-width: 600px) {
+  #wikiSearchResult {
+    margin-top: 90px;
+  }
+}
+@media (max-width: 800px) {
+  #wikiSearchResult {
+    margin-top: 100px;
+  }
+}
+/* ========================
+    WIKI RESULT END
+==========================*/
+
+/* ========================
+    GOTO TOP START
+==========================*/
+#gotoTop {
+    display: none;
+    position: fixed;
+    width: 4em;
+    height: 4em;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background: linear-gradient(-45deg, rgb(233, 30, 99) 50%, transparent 50%);
+    background: rgb(233, 30, 99);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 0 0 2em 0;
+    margin: 0.2em 2.5em;
+	transform: rotate(45deg);
+}
+#gotoTop:nth-child(1) {transform: rotate(45deg) skewX(5deg) skewY(5deg);}
+#gotoTop:nth-child(3) {transform: rotate(45deg) skewX(-5deg) skewY(-5deg);}
+
+#gotoTop:hover {
+    background-color: #555;
+}
+/* ========================
+    GOTO TOP END
+==========================*/
+/* ========================
+    GOTO HOME START
+==========================*/
+.gotoHome {
+    text-align: center;
+}
+#gotoHome {
+    cursor: pointer;
+}
+
+/* ========================
+    GOTO HOME END
+==========================*/

@@ -1,0 +1,28 @@
+{
+  "name": "customer-card-generator",
+  "version": "1.0.0",
+  "description": "1. Bootstrap\r 2. JQuery\r 3. JQuery UI\r 4. Modernizr\r 5. Grunt",
+  "main": "index.js",
+  "dependencies": {
+    "bower": "^1.8.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziaullahkhan/Customer-Card-Generator.git"
+  },
+  "author": "Zia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ziaullahkhan/Customer-Card-Generator/issues"
+  },
+  "homepage": "https://github.com/ziaullahkhan/Customer-Card-Generator#readme"
+}

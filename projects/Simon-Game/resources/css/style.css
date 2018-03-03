@@ -1,0 +1,110 @@
+/*
+GENERAL START
+-----------------------------------------*/
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Oswald', sans-serif;
+}
+.intro {
+    background: url(../images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    top: 0;
+    display: table;
+}
+.intro .inner {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    max-width: none;
+}
+.content {
+    max-width: 460px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgba(173, 87, 3, 0.89);
+    border-radius: 30px;
+    padding: 10px;
+}
+.content h1 {
+    font-family: 'Raleway', sans-serif;
+    color: #F9F3F4;
+    text-shadow: 0px 0px 300px #000;
+    margin: 0;
+    font-size: 225%;
+}
+#text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+}
+.count-div {
+    margin-bottom: 5px;
+}
+/*
+GENERAL END
+-----------------------------------------*/
+
+/*
+BUTTONS START
+-----------------------------------------*/
+#one, #two, #three, #four  {
+    height: 100px;
+    width:100px;
+    border-radius: 50px;
+    margin: 20px;
+    text-align: center;
+    align-content: center;
+    outline: none;
+
+}
+.dark1 {
+    background-color: #10b958;
+}
+
+.light1 {
+    background-color: #13FF75;
+}
+
+.dark2 {
+    background-color: #c61611;
+}
+
+.light2 {
+    background-color: #ff1c15;
+}
+
+.dark3 {
+    background-color: #dddf1a;
+}
+
+.light3 {
+    background-color: #fdff1d;
+}
+
+.dark4 {
+    background-color: #5ac5c6;
+}
+
+.light4 {
+    background-color: #73feff;
+}
+
+.bt {
+    height: 30px;
+    width: 40px;
+    margin: 5px;
+    text-align: center;
+    align-content: center;
+    background-color: transparent;
+}
+
+/*
+BUTTONS END
+-----------------------------------------*/

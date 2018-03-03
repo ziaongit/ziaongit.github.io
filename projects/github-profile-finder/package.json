@@ -1,0 +1,34 @@
+{
+  "name": "githubprofilefinder",
+  "version": "1.0.0",
+  "description": "This is a simple application that fetches and displays Github user profile information info and the latest repositories.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziaullahkhan/GitHubProfileFinder.git"
+  },
+  "keywords": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Qeury AjaxJ"
+  ],
+  "author": "Zia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ziaullahkhan/GitHubProfileFinder/issues"
+  },
+  "homepage": "https://github.com/ziaullahkhan/GitHubProfileFinder#readme",
+  "dependencies": {
+    "bower": "^1.8.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}

@@ -1,0 +1,56 @@
+/* --------------------------
+      SEARCH BOC START
+--------------------------- */
+.search-container {
+  padding: 20px;
+}
+.search-container .wrapper {
+    margin: 0 auto;
+}
+.search-container .wrapper h1 {
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
+    padding: 10px 0;
+}
+.search-container .wrapper input {
+    width: 100%;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    border: 1px solid #d6d6d6;
+    padding: 10px 30px;
+    font-size: 21px;
+    font-weight: 300;
+    font-family: Roboto;
+
+}
+.search-container .wrapper input:focus {
+    outline: none;
+}
+::-webkit-input-placeholder {
+    color: #b8b8b8;
+    font-family: Roboto;
+    text-align: center;
+}
+/* --------------------------
+      SEARCH BOC END
+--------------------------- */
+
+/* --------------------------
+      GENERAL START
+--------------------------- */
+#profile {
+  padding: 30px 0;
+}
+.avatar {
+  width: 100%;
+}
+.user-bul {
+  padding: 10px 42px;
+}
+.repo-description p {
+  text-align: justify;
+}
+/* --------------------------
+      GENERAL END
+--------------------------- */

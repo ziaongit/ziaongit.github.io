@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Customer Card Generator</title>
+  <link href="resources/stylesheet/bin/styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6 col-md-3 form-container">
+        <form id="myForm">
+
+          <div class="form-group">
+            <label for="user_name">Name</label>
+            <input type="text" class="form-control" id="user_name" placeholder="Enter name">
+          </div>
+          
+          <div class="form-group">
+            <label for="user_email">Email</label>
+            <input type="email" class="form-control" id="user_email" placeholder="Enter email">
+          </div>
+          
+          <div class="form-group">
+            <label for="user_age">Age</label>
+            <input type="text" class="form-control" id="user_age" placeholder="Enter age">
+          </div>
+          <p class="text-danger" id="error">Something is missing!</p>
+          <input type="submit" class="btn btn-block btn-primary" value="Add user">
+          
+        </form>
+      </div>
+      <div class="col-xs-12 col-md-9 content-container">
+        <div class="row" id="parent_avatars">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+
+<script src="resources/javascripts/bin/customer-card-generator.min.js"></script>
+</body>
+</html>
