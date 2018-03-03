@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="HTML, CSS, JavaScript, jQuery">
+    <meta name="author" content="Zia">
+    <meta name="Simon Game" content="What is Simon Game: Simon is an electronic game of memory skill invented by Ralph H. Baer and Howard J. Morrison,[1] with software programming by Lenny Cope. The device creates a series of tones and lights and requires a user to repeat the series. If the user succeeds the series becomes progressively longer and more complex. Once the user fails, the game is over. - Wikipedia">
+    <title>Simon Game</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+    <section class="intro">
+        <div class="inner">
+            <div class="content">
+                <h1>Simon Game</h1>
+                <div id="parent" class="row text-center">
+                    <h1 id="input" class="text-primary text-center"></h1>
+                    <div class="row text-center">
+                        <button id="one" class="dark1"></button>
+                        <button id="two" class="dark2"></button>
+                    </div>
+                    <div class="row text-center">
+                        <div class="count-div">
+                            <div id="text">Count</div>
+                            <form id="count">  </form>
+                        </div>
+                        <button id="start" class="bt">start</button>
+                        <button id="strict" class="bt">strict</button>
+                    </div>
+                    <div class="row text-center">
+                        <button id="off" class="bt">off</button>
+                        <button id="on" class="bt">on</button>
+                    </div>
+                    <div class="row text-center">
+                        <button id="three" class="dark3"></button>
+                        <button id="four" class="dark4"></button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <audio id="audio1">
+        <source src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio2">
+        <source src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio3">
+        <source src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio4">
+        <source src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" type="audio/mpeg">
+    </audio>
+<!-- jQuery JavaScript -->
+<script src="resources/js/jquery-3.2.1.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script src="resources/js/main.js"></script>
+</body>
+</html>
