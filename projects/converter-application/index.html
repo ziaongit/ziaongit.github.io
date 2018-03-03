@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <title>Converter Application</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Weight Converter Start -->
+            <div class="col-md-6">
+                <h1 class="display-4 text-center mb-4">Weight Converter</h1>
+                <form class="form-group">
+                    <input id="weightInput" type="number" class="form-control form-control-lg" placeholder="Enter Pounds...">
+                </form>
+                <div id="weightResult">
+                    <div class="card card-primary mb-2">
+                        <div class="card-block">
+                            <h4>Grams:</h4>
+                            <div id="gramsOutput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-success mb-2">
+                        <div class="card-block">
+                            <h4>Kilograms:</h4>
+                            <div id="kilogramsOutput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-danger mb-2">
+                        <div class="card-block">
+                            <h4>Ounces:</h4>
+                            <div id="ouncesOutput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-warning mb-2">
+                        <div class="card-block">
+                            <h4>Tons:</h4>
+                            <div id="tonsOutput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Weight Converter End -->
+
+            <!-- Length Converter Start -->
+            <div class="col-md-6">
+                <h1 class="display-4 text-center mb-4">Length Converter</h1>
+                <form class="form-group">
+                    <input id="lengthInput" type="number" class="form-control form-control-lg" placeholder="Enter Kilometer...">
+                </form>
+                <div id="lengthResult">
+                    <div class="card card-primary mb-2">
+                        <div class="card-block">
+                            <h4>Meter:</h4>
+                            <div id="meterOutput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-success mb-2">
+                        <div class="card-block">
+                            <h4>Centimeter:</h4>
+                            <div id="centimeterOutput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-danger mb-2">
+                        <div class="card-block">
+                            <h4>Millimeter:</h4>
+                            <div id="millimeterOutput">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="card card-warning mb-2">
+                        <div class="card-block">
+                            <h4>Miles:</h4>
+                            <div id="milesOutput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Length Converter End -->
+        </div>
+    </div>
+<script src="resources/js/main.js"></script>
+</body>
+</html>
