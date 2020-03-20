@@ -4,9 +4,8 @@
     height: auto;
     margin: 12px;
     padding: 10px;
-    border: 1px solid black;
-        }
- img{
+}
+img{
 width: 200px;
 height:auto;
 }
@@ -16,10 +15,9 @@ height:auto;
     height: auto;
     margin: 12px;
     padding: 10px;
-    border: 1px solid white;
-        }
+}
 
-        .box002 img{
-            width: 200px;
-            height:auto;
-            }
+.box002 img{
+    width: 200px;
+    height:auto;
+}
