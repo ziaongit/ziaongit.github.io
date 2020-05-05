@@ -18,7 +18,7 @@ main {
   box-sizing: border-box;
 }
 
-#regForm {
+#register-form {
   background-color: #fff;
   margin: 60px auto;
   font-family: Raleway;
@@ -180,7 +180,6 @@ h1 {
 .select {
   position: relative;
   display: inline-block;
-  margin-bottom: 15px;
   width: 100%;
 }
 .select select {
@@ -244,6 +243,11 @@ h1 {
   animation: spin 2s linear infinite;
   display: none;
 }
+.error{
+  color:red;
+}
+
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
