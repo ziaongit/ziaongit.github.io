@@ -39,10 +39,10 @@ input, select {
 }
 
 /* Mark input boxes that get errors during validation: */
-input.invalid {
+input.error {
   background-color: #ffdddd;
 }
-select.invalid {
+select.error {
   background-color: #ffdddd;
 }
 
