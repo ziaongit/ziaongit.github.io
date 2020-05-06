@@ -106,7 +106,7 @@
                            <div class="control-group">
                               <h5>Zip Code</h5>
                               <p>
-                                 <input type="number" data-rule-required="true" data-msg-required="Zip Code is required" id="zip" name="zip">
+                                 <input type="text" data-rule-required="true" data-msg-required="Zip Code is required" id="zip" name="zip">
                               </p>
                            </div>
                         </div>
