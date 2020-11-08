@@ -423,4 +423,12 @@ footer.second p{
 
 .fa-fiverr:before {
     content: "Fiverr";
+    font-size: 32px;
+    border-left: 6px solid;
+    border-right: 6px solid;
+    border-radius: 30px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-family: 'Alegreya';
+    vertical-align: middle;
 }
