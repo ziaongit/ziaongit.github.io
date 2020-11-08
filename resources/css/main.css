@@ -421,6 +421,6 @@ footer.second p{
     FOOTER END
 **************************/
 
-.fa-github:before {
+.fa-fiverr:before {
     content: url('https://raw.githubusercontent.com/ziaongit/ziaongit.github.io/master/resources/images/fiverr.svg');
 }
