@@ -273,7 +273,7 @@ body {
     HOBBIES START
 **************************/
 #hobbies {
-    padding: 50px 0;
+    padding: 30px 0;
     background-color: #A2B2C1;
 }
 
@@ -282,6 +282,7 @@ body {
     color: #F5F5F5;
     font-size: 140%;
     line-height: 150%;
+    padding-top: 5px;
 }
 #googleSearch {
     background-color: #A2B2C1;
