@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ekologisk</title>
+    <meta name="description" content="This is the description">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="store.js" async></script>
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="main-nav nav">
+            <ul>
+                <li><a href="index.html">HEM</a></li>
+            </ul>
+        </nav>
+        <h1 class="band-name band-name-large">Ekologisk</h1>
+    </header>
+
+    <div id="buy-alert"></div>
+
+    <section class="container content-section">
+        <h2 class="section-header">Vagn</h2>
+        <div class="cart-row">
+            <span class="cart-item cart-header cart-column">Artikel</span>
+            <span class="cart-price cart-header cart-column">Pris</span>
+            <span class="cart-quantity cart-header cart-column">Kvantitet</span>
+        </div>
+        <div class="cart-items" id="cartAllItems">
+        </div>
+        <div class="cart-total">
+            <strong class="cart-total-title">Total</strong>
+            <div class="cart-total-price" id="cartTotal">SEK0</div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-auto">
+                <div class="row mt-2 mb-5">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-purchase" type="button">KÖP</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-clear" onclick="clearCart()" type="button">Rensa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container content-section">
+        <h2 class="section-header">Produkter</h2>
+        <div class="shop-items" id="shopProducts">
+
+        </div>
+    </section>
+
+
+    <footer class="main-footer">
+        <div class="container main-footer-container">
+            <h3 class="band-name">Ekologisk</h3>
+            <ul class="nav footer-nav">
+                <li>
+                    <a href="https://www.youtube.com" target="_blank">
+                        <img src="images/YouTube-Logo.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.spotify.com" target="_blank">
+                        <img src="images/Spotify-Logo.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank">
+                        <img src="images/Facebook-Logo.png">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
