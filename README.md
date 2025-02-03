@@ -1,2 +1,0 @@
-# Summary
-Web developer with extensive experience in web design and web development. Dedicated, responsible, team player, hardworking and fast learner with a knack for problem solving. Have worked both independently and in a team for agile development of company products.
