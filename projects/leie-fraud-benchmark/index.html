@@ -62,7 +62,7 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <div class="btns"><a class="btn btn-primary" href="https://github.com/ziaongit/leie-dl-fraud-benchmark" target="_blank" rel="noopener">Code &amp; results on GitHub →</a><a class="btn" href="#method">How it was evaluated</a></div>
 <div class="stats">
 <div class="stat"><b>~27M</b><span>provider-years (Physician 2013–2024 + Part D 2013–2023)</span></div>
-<div class="stat"><b>3,671</b><span>confirmed fraud provider-years (1 in ~9,000)</span></div>
+<div class="stat"><b>3,671</b><span>confirmed fraud provider-years (1 in 6,000–9,000)</span></div>
 <div class="stat"><b>7</b><span>models, equal tuning budget</span></div>
 <div class="stat"><b>15 + 3</b><span>provider-grouped folds + temporal repeats per dataset</span></div>
 </div>
@@ -128,9 +128,9 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <div><b>Confirmed labels</b>Positive = provider-year 1–3 years before a fraud-related LEIE exclusion (§1128(a)(1), (a)(3), (b)(7)). Negative = never in the LEIE. Nothing in the features is derived from the label.</div>
 <div><b>No leakage</b>No provider appears in both training and test data. All preprocessing is fitted on training rows only. No SMOTE — class weights instead.</div>
 <div><b>Fair comparison</b>Every model gets 6 tuned configurations per split, chosen on an inner provider-grouped validation set. Same GPU, epochs and early stopping for all neural models.</div>
-<div><b>Honest statistics</b>Nadeau–Bengio corrected tests with Holm adjustment, effect sizes and equivalence tests. Fold-to-fold noise is large, so no difference is formally significant — the conclusion rests on consistent direction, audit-budget results and calibration.</div>
+<div><b>Honest statistics</b>Nadeau–Bengio corrected tests with Holm adjustment, effect sizes and equivalence tests. Fold-to-fold noise is large: on Part D, LightGBM finds significantly more fraud in the top 1,000 than three of the four deep models, while the other differences are not significant — so the conclusion also rests on consistent direction, audit-budget results and calibration.</div>
 </div>
-<p class="note" style="margin-top:1rem">Robustness checks in the paper: label noise (hiding up to 50% of fraud cases), an independent New York State Medicaid exclusion list, learning curves and model combinations.</p>
+<p class="note" style="margin-top:1rem">Robustness checks in the paper, all seven models: label noise (hiding up to 50% of fraud cases; the trees keep the best top-1,000 precision), an independent New York State Medicaid exclusion list (every model transfers only moderately, ROC-AUC 0.70–0.76), learning curves and model combinations.</p>
 <div class="warn" style="margin-top:1rem">This page shows aggregate research results only. It is not a fraud-scoring tool and does not rate any individual provider: at this prevalence even the best model's precision is below 1%, so a high score is never evidence of fraud.</div>
 </section>
 </main>
