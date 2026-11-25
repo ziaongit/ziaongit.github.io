@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Learning vs Trees on Confirmed Medicare Fraud — Zia Ullah</title>
+<meta name="description" content="Interactive results of a leakage-free benchmark of sequence and attention deep learning models against tree ensembles on confirmed (LEIE) Medicare provider fraud labels.">
+<meta name="author" content="Zia Ullah">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f0f13;--bg2:#16161d;--bg3:#1e1e28;--accent:#6c63ff;--accent2:#8b85ff;--text:#e8e8f0;--text2:#9999bb;--border:#2a2a3a;--radius:12px;
+--tree:#3fb27f;--lin:#9a9ab0;--mlp:#5b8def;--ftt:#8fb3f0;--seq:#e0645c;--att:#f0a04b}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--accent2);text-decoration:none}a:hover{color:#fff}
+nav{position:sticky;top:0;z-index:10;background:rgba(15,15,19,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-weight:700;color:#fff}.nav-links{display:flex;gap:1.5rem;list-style:none;font-size:.85rem}.nav-links a{color:var(--text2)}
+main{max-width:1100px;margin:0 auto;padding:2.5rem 1rem 4rem}
+.tag{display:inline-block;background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.3);border-radius:20px;padding:3px 12px;font-size:.75rem;font-weight:500;margin:0 .4rem .6rem 0}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.2;color:#fff;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;color:#fff;margin-bottom:.4rem}
+.lead{color:var(--text2);max-width:760px;margin-bottom:1.4rem}
+.btns{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;font-size:.88rem;font-weight:600;border:1px solid var(--border);color:var(--text2)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn:hover{color:#fff;border-color:var(--text2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2.5rem}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;text-align:center}
+.stat b{display:block;font-size:1.6rem;color:var(--accent2)}.stat span{font-size:.8rem;color:var(--text2)}
+section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.sub{color:var(--text2);font-size:.9rem;margin-bottom:1rem}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;margin-bottom:1rem;font-size:.85rem;color:var(--text2)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;border:0;color:var(--text2);padding:6px 12px;font:inherit;font-size:.82rem;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+select,input[type=range]{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font:inherit;font-size:.82rem}
+input[type=range]{padding:0;accent-color:var(--accent)}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--text2);font-family:Inter,sans-serif;font-size:12px}
+.note{font-size:.8rem;color:var(--text2);margin-top:.6rem}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:right}th:first-child,td:first-child{text-align:left}
+th{color:var(--text2);font-weight:500}
+.find{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.find div{background:var(--bg3);border-radius:10px;padding:1rem;font-size:.88rem;color:var(--text2)}
+.find b{color:#fff;display:block;margin-bottom:.3rem}
+.warn{border-left:3px solid var(--att);background:var(--bg3);padding:.9rem 1rem;border-radius:6px;font-size:.85rem;color:var(--text2)}
+.legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.78rem;color:var(--text2);margin-top:.4rem}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;border-top:1px solid var(--border)}
+@media(max-width:640px){.nav-links{display:none}section{padding:1rem}}
+</style>
+</head>
+<body>
+<nav><a class="nav-brand" href="../../">Zia Ullah</a>
+<ul class="nav-links"><li><a href="#bench">Benchmark</a></li><li><a href="#budget">Audit budget</a></li><li><a href="#order">Feature order</a></li><li><a href="#attention">Attention</a></li><li><a href="#lc">Learning curve</a></li><li><a href="../../#academic">← Portfolio</a></li></ul></nav>
+<main>
+<span class="tag">Research · Healthcare fraud</span><span class="tag">Deep learning · Explainability</span><span class="tag">Manuscript in preparation</span>
+<h1>Do sequence and attention deep learning models help detect confirmed Medicare provider fraud?</h1>
+<p class="lead">A leakage-free benchmark of seven models on public CMS Medicare data linked to <b>confirmed</b> fraud exclusions from the U.S. OIG exclusion list (LEIE). Explore the results below — every number comes from the result files in the public repository.</p>
+<div class="btns"><a class="btn btn-primary" href="https://github.com/ziaongit/leie-dl-fraud-benchmark" target="_blank" rel="noopener">Code &amp; results on GitHub →</a><a class="btn" href="#method">How it was evaluated</a></div>
+<div class="stats">
+<div class="stat"><b>~27M</b><span>provider-years (Physician 2013–2024 + Part D 2013–2023)</span></div>
+<div class="stat"><b>3,671</b><span>confirmed fraud provider-years (1 in ~9,000)</span></div>
+<div class="stat"><b>7</b><span>models, equal tuning budget</span></div>
+<div class="stat"><b>15 + 3</b><span>provider-grouped folds + temporal repeats per dataset</span></div>
+</div>
+<section>
+<h2>Main findings</h2>
+<div class="find">
+<div><b>Trees still win</b>LightGBM and XGBoost ranked confirmed fraud best. The CNN-RNN and attention CNN-RNN beat LightGBM in at most 2 of 15 folds.</div>
+<div><b>Order matters for sequence models</b>Shuffling the order of the same columns changed CNN-RNN PR-AUC by up to 7.7× on one fold.</div>
+<div><b>Attention is not an explanation</b>Attention agreed weakly with permutation and ablation importance (median ρ 0.10–0.16) and partly tracked column position.</div>
+<div><b>Realistic performance is modest</b>Lift of 15–20× over random selection, but precision stays below 1% at every useful audit budget.</div>
+</div>
+</section>
+<section id="bench">
+<h2>1 · Benchmark explorer</h2>
+<p class="sub">Mean over test folds at the natural fraud rate (value on the right). Dots show individual folds or repeats (PR-AUC lift only); a few very high folds are marked at the edge.</p>
+<div class="controls">
+<span>Data</span><span class="seg" id="ds"><button data-v="phys" class="on">Physician</button><button data-v="partd">Part D</button></span>
+<span>Design</span><span class="seg" id="des"><button data-v="grouped" class="on">Provider-grouped CV</button><button data-v="temporal">Temporal (train ≤2019, test 2020–22)</button></span>
+<span>Metric</span><select id="metric">
+<option value="lift_pr">PR-AUC lift over chance</option><option value="roc_auc">ROC-AUC</option>
+<option value="prec">Precision in top k</option><option value="recall">Recall in top k</option>
+<option value="ece">Calibration error (ECE, lower is better)</option><option value="secs">Training time per split (s)</option></select>
+<span id="kbox" style="display:none">k = <input type="range" id="k" min="0" max="3" step="1" value="2"> <b id="kval" style="color:#fff">1,000</b></span>
+</div>
+<div id="benchChart"></div>
+<div class="legend"><span><i style="background:var(--lin)"></i>Linear</span><span><i style="background:var(--tree)"></i>Tree ensembles</span><span><i style="background:var(--mlp)"></i>MLP</span><span><i style="background:var(--ftt)"></i>FT-Transformer</span><span><i style="background:var(--seq)"></i>CNN-RNN</span><span><i style="background:var(--att)"></i>Attention CNN-RNN</span></div>
+</section>
+
+<section id="budget">
+<h2>2 · What an investigator would see</h2>
+<p class="sub">Flag the top-k provider-years in one test fold (about 2.7 million provider-years containing ~290 Physician / ~440 Part D confirmed fraud cases). Counts are means over 15 provider-grouped folds, scaled to the full population.</p>
+<div class="controls"><span>Data</span><span class="seg" id="ds2"><button data-v="phys" class="on">Physician</button><button data-v="partd">Part D</button></span>
+<span>Audit budget</span><span class="seg" id="k2"><button data-v="1000" class="on">Top 1,000</button><button data-v="5000">Top 5,000</button></span></div>
+<div id="confTable"></div>
+</section>
+
+<section id="order">
+<h2>3 · Same data, different column order</h2>
+<p class="sub">Each vertical line joins the PR-AUC lift of one model on one fold under three column orders (original + two random). Data, hyperparameters and seeds are identical — only the order of the unordered tabular features changes.</p>
+<div class="controls"><span>Data</span><span class="seg" id="ds3"><button data-v="phys" class="on">Physician</button><button data-v="partd">Part D</button></span></div>
+<div id="orderChart"></div>
+<div class="legend"><span><i style="background:var(--seq)"></i>CNN-RNN</span><span><i style="background:var(--att)"></i>Attention CNN-RNN</span></div>
+</section>
+
+<section id="attention">
+<h2>4 · Are attention weights faithful explanations?</h2>
+<p class="sub">Spearman correlation between feature rankings (5 folds × 3 column orders). If attention explained the model, it should agree with permutation and ablation importance — which agree well with each other.</p>
+<div class="controls"><span>Data</span><span class="seg" id="ds4"><button data-v="phys" class="on">Physician</button><button data-v="partd">Part D</button></span></div>
+<div id="attChart"></div>
+</section>
+
+<section id="lc">
+<h2>5 · Does more data help the deep models?</h2>
+<p class="sub">Physician data, provider-grouped (5 folds), training on 10%–100% of training providers (about 110 to 980 fraud provider-years).</p>
+<div class="controls"><span>Metric</span><span class="seg" id="lcm"><button data-v="roc" class="on">ROC-AUC (mean)</button><button data-v="lift">PR-AUC lift (median)</button></span></div>
+<div id="lcChart"></div>
+<div class="legend" id="lcLegend"></div>
+</section>
+
+<section id="method">
+<h2>How it was evaluated</h2>
+<div class="find">
+<div><b>Confirmed labels</b>Positive = provider-year 1–3 years before a fraud-related LEIE exclusion (§1128(a)(1), (a)(3), (b)(7)). Negative = never in the LEIE. Nothing in the features is derived from the label.</div>
+<div><b>No leakage</b>No provider appears in both training and test data. All preprocessing is fitted on training rows only. No SMOTE — class weights instead.</div>
+<div><b>Fair comparison</b>Every model gets 6 tuned configurations per split, chosen on an inner provider-grouped validation set. Same GPU, epochs and early stopping for all neural models.</div>
+<div><b>Honest statistics</b>Nadeau–Bengio corrected tests with Holm adjustment, effect sizes and equivalence tests. Fold-to-fold noise is large, so no difference is formally significant — the conclusion rests on consistent direction, audit-budget results and calibration.</div>
+</div>
+<p class="note" style="margin-top:1rem">Robustness checks in the paper: label noise (hiding up to 50% of fraud cases), an independent New York State Medicaid exclusion list, learning curves and model combinations.</p>
+<div class="warn" style="margin-top:1rem">This page shows aggregate research results only. It is not a fraud-scoring tool and does not rate any individual provider: at this prevalence even the best model's precision is below 1%, so a high score is never evidence of fraud.</div>
+</section>
+</main>
+<footer>© 2026 Zia Ullah · Data: CMS, OIG HHS (LEIE), NY OMIG via OpenSanctions · <a href="https://github.com/ziaongit/leie-dl-fraud-benchmark" target="_blank" rel="noopener">GitHub</a> · <a href="../../">Portfolio</a></footer>
+<script>const D={"bench":{"partd_grouped":{"LogReg":{"pr_auc":0.001204,"lift_pr":7.212927,"roc_auc":0.821682,"prec_at_100":0.005255,"prec_at_500":0.004788,"prec_at_1000":0.003928,"prec_at_5000":0.003412,"recall_at_100":0.001192,"recall_at_500":0.005419,"recall_at_1000":0.008989,"recall_at_5000":0.038864,"brier":0.359382,"ece":0.522014,"secs":52.8,"median_lift":7.29,"pos_test":442.8,"n":15},"LightGBM":{"pr_auc":0.003002,"lift_pr":17.849345,"roc_auc":0.820734,"prec_at_100":0.025577,"prec_at_500":0.013552,"prec_at_1000":0.009922,"prec_at_5000":0.004679,"recall_at_100":0.005858,"recall_at_500":0.015236,"recall_at_1000":0.02247,"recall_at_5000":0.053198,"brier":0.10185,"ece":0.179714,"secs":60.133333,"median_lift":12.37,"pos_test":442.8,"n":15},"XGBoost":{"pr_auc":0.002442,"lift_pr":14.495035,"roc_auc":0.809256,"prec_at_100":0.02889,"prec_at_500":0.013559,"prec_at_1000":0.00872,"prec_at_5000":0.004905,"recall_at_100":0.00653,"recall_at_500":0.015286,"recall_at_1000":0.019709,"recall_at_5000":0.055548,"brier":0.14858,"ece":0.276449,"secs":57.466667,"median_lift":10.75,"pos_test":442.8,"n":15},"MLP":{"pr_auc":0.001696,"lift_pr":10.043771,"roc_auc":0.807082,"prec_at_100":0.015765,"prec_at_500":0.009172,"prec_at_1000":0.006923,"prec_at_5000":0.003959,"recall_at_100":0.003528,"recall_at_500":0.010322,"recall_at_1000":0.015497,"recall_at_5000":0.044622,"brier":0.344895,"ece":0.48863,"secs":17.733333,"median_lift":9.03,"pos_test":442.8,"n":15},"FTT":{"pr_auc":0.001154,"lift_pr":6.885199,"roc_auc":0.800034,"prec_at_100":0.004544,"prec_at_500":0.004121,"prec_at_1000":0.00293,"prec_at_5000":0.002799,"recall_at_100":0.001078,"recall_at_500":0.004733,"recall_at_1000":0.006748,"recall_at_5000":0.031938,"brier":0.383198,"ece":0.528582,"secs":197.333333,"median_lift":5.73,"pos_test":442.8,"n":15},"CNNRNN":{"pr_auc":0.001388,"lift_pr":8.285837,"roc_auc":0.804905,"prec_at_100":0.003935,"prec_at_500":0.005846,"prec_at_1000":0.004794,"prec_at_5000":0.003012,"recall_at_100":0.000883,"recall_at_500":0.006702,"recall_at_1000":0.010981,"recall_at_5000":0.034514,"brier":0.348222,"ece":0.48586,"secs":93.866667,"median_lift":6.46,"pos_test":442.8,"n":15},"AttnCNNRNN":{"pr_auc":0.001219,"lift_pr":7.158014,"roc_auc":0.790917,"prec_at_100":0.007158,"prec_at_500":0.004652,"prec_at_1000":0.00346,"prec_at_5000":0.002639,"recall_at_100":0.001597,"recall_at_500":0.005163,"recall_at_1000":0.007776,"recall_at_5000":0.030032,"brier":0.385613,"ece":0.547381,"secs":114.133333,"median_lift":5.98,"pos_test":442.8,"n":15}},"partd_temporal":{"LogReg":{"pr_auc":0.000683,"lift_pr":6.09388,"roc_auc":0.793769,"prec_at_100":0.0,"prec_at_500":0.001328,"prec_at_1000":0.002659,"prec_at_5000":0.003133,"recall_at_100":0.0,"recall_at_500":0.001536,"recall_at_1000":0.006144,"recall_at_5000":0.036098,"brier":0.302254,"ece":0.458544,"secs":45.666667,"median_lift":6.11,"pos_test":434.0,"n":3},"LightGBM":{"pr_auc":0.000753,"lift_pr":6.713509,"roc_auc":0.789929,"prec_at_100":0.0,"prec_at_500":0.003319,"prec_at_1000":0.002664,"prec_at_5000":0.003133,"recall_at_100":0.0,"recall_at_500":0.00384,"recall_at_1000":0.006144,"recall_at_5000":0.036098,"brier":0.07557,"ece":0.136125,"secs":56.0,"median_lift":6.76,"pos_test":434.0,"n":3},"XGBoost":{"pr_auc":0.000694,"lift_pr":6.186054,"roc_auc":0.780578,"prec_at_100":0.0,"prec_at_500":0.001993,"prec_at_1000":0.002996,"prec_at_5000":0.002666,"recall_at_100":0.0,"recall_at_500":0.002304,"recall_at_1000":0.006912,"recall_at_5000":0.030722,"brier":0.132618,"ece":0.270665,"secs":51.0,"median_lift":6.23,"pos_test":434.0,"n":3},"MLP":{"pr_auc":0.000745,"lift_pr":6.644483,"roc_auc":0.783402,"prec_at_100":0.0,"prec_at_500":0.003984,"prec_at_1000":0.002659,"prec_at_5000":0.002532,"recall_at_100":0.0,"recall_at_500":0.004608,"recall_at_1000":0.006144,"recall_at_5000":0.029186,"brier":0.283453,"ece":0.409437,"secs":14.666667,"median_lift":6.67,"pos_test":434.0,"n":3},"FTT":{"pr_auc":0.000576,"lift_pr":5.137747,"roc_auc":0.776639,"prec_at_100":0.0033,"prec_at_500":0.001331,"prec_at_1000":0.002992,"prec_at_5000":0.002332,"recall_at_100":0.000768,"recall_at_500":0.001536,"recall_at_1000":0.006912,"recall_at_5000":0.026882,"brier":0.369584,"ece":0.524226,"secs":175.0,"median_lift":5.33,"pos_test":434.0,"n":3},"CNNRNN":{"pr_auc":0.000465,"lift_pr":4.147984,"roc_auc":0.728737,"prec_at_100":0.0033,"prec_at_500":0.001988,"prec_at_1000":0.000997,"prec_at_5000":0.001266,"recall_at_100":0.000768,"recall_at_500":0.002304,"recall_at_1000":0.002304,"recall_at_5000":0.014593,"brier":0.426527,"ece":0.591656,"secs":73.666667,"median_lift":3.86,"pos_test":434.0,"n":3},"AttnCNNRNN":{"pr_auc":0.000677,"lift_pr":6.034601,"roc_auc":0.767015,"prec_at_100":0.0033,"prec_at_500":0.004649,"prec_at_1000":0.003997,"prec_at_5000":0.002399,"recall_at_100":0.000768,"recall_at_500":0.005376,"recall_at_1000":0.009217,"recall_at_5000":0.02765,"brier":0.286459,"ece":0.434611,"secs":98.666667,"median_lift":5.31,"pos_test":434.0,"n":3}},"phys_grouped":{"LogReg":{"pr_auc":0.00221,"lift_pr":21.726682,"roc_auc":0.846373,"prec_at_100":0.003935,"prec_at_500":0.001859,"prec_at_1000":0.002063,"prec_at_5000":0.002066,"recall_at_100":0.001483,"recall_at_500":0.003283,"recall_at_1000":0.007249,"recall_at_5000":0.035581,"brier":0.326048,"ece":0.488775,"secs":50.133333,"median_lift":9.51,"pos_test":291.4,"n":15},"LightGBM":{"pr_auc":0.002177,"lift_pr":19.589819,"roc_auc":0.830765,"prec_at_100":0.012517,"prec_at_500":0.008383,"prec_at_1000":0.005723,"prec_at_5000":0.004106,"recall_at_100":0.004289,"recall_at_500":0.014083,"recall_at_1000":0.01937,"recall_at_5000":0.070541,"brier":0.066442,"ece":0.122115,"secs":52.866667,"median_lift":14.13,"pos_test":291.4,"n":15},"XGBoost":{"pr_auc":0.001625,"lift_pr":15.005833,"roc_auc":0.81968,"prec_at_100":0.006549,"prec_at_500":0.00798,"prec_at_1000":0.007056,"prec_at_5000":0.004012,"recall_at_100":0.002246,"recall_at_500":0.013755,"recall_at_1000":0.024103,"recall_at_5000":0.068863,"brier":0.062696,"ece":0.131208,"secs":38.466667,"median_lift":13.38,"pos_test":291.4,"n":15},"MLP":{"pr_auc":0.001241,"lift_pr":11.678051,"roc_auc":0.837784,"prec_at_100":0.005863,"prec_at_500":0.004125,"prec_at_1000":0.00406,"prec_at_5000":0.003372,"recall_at_100":0.002153,"recall_at_500":0.007402,"recall_at_1000":0.014586,"recall_at_5000":0.05834,"brier":0.237268,"ece":0.348728,"secs":19.6,"median_lift":10.79,"pos_test":291.4,"n":15},"FTT":{"pr_auc":0.001222,"lift_pr":11.456709,"roc_auc":0.825102,"prec_at_100":0.007171,"prec_at_500":0.003849,"prec_at_1000":0.003261,"prec_at_5000":0.002386,"recall_at_100":0.002545,"recall_at_500":0.006862,"recall_at_1000":0.011538,"recall_at_5000":0.041373,"brier":0.354925,"ece":0.494504,"secs":142.733333,"median_lift":8.1,"pos_test":291.4,"n":15},"CNNRNN":{"pr_auc":0.000896,"lift_pr":8.340308,"roc_auc":0.798635,"prec_at_100":0.004595,"prec_at_500":0.003321,"prec_at_1000":0.003528,"prec_at_5000":0.002559,"recall_at_100":0.001576,"recall_at_500":0.005678,"recall_at_1000":0.012254,"recall_at_5000":0.044784,"brier":0.296632,"ece":0.416781,"secs":74.333333,"median_lift":7.2,"pos_test":291.4,"n":15},"AttnCNNRNN":{"pr_auc":0.001011,"lift_pr":9.48754,"roc_auc":0.822464,"prec_at_100":0.004595,"prec_at_500":0.004513,"prec_at_1000":0.003528,"prec_at_5000":0.002826,"recall_at_100":0.001705,"recall_at_500":0.007841,"recall_at_1000":0.012311,"recall_at_5000":0.04878,"brier":0.297682,"ece":0.448338,"secs":87.0,"median_lift":8.98,"pos_test":291.4,"n":15}},"phys_temporal":{"LogReg":{"pr_auc":0.000564,"lift_pr":6.54913,"roc_auc":0.829594,"prec_at_100":0.0033,"prec_at_500":0.001331,"prec_at_1000":0.001994,"prec_at_5000":0.001333,"recall_at_100":0.001079,"recall_at_500":0.002157,"recall_at_1000":0.006472,"recall_at_5000":0.021575,"brier":0.281567,"ece":0.428617,"secs":36.333333,"median_lift":6.71,"pos_test":309.0,"n":3},"LightGBM":{"pr_auc":0.000687,"lift_pr":7.98701,"roc_auc":0.803271,"prec_at_100":0.0,"prec_at_500":0.003319,"prec_at_1000":0.003327,"prec_at_5000":0.002199,"recall_at_100":0.0,"recall_at_500":0.005394,"recall_at_1000":0.010787,"recall_at_5000":0.035599,"brier":0.005887,"ece":0.015779,"secs":49.666667,"median_lift":7.99,"pos_test":309.0,"n":3},"XGBoost":{"pr_auc":0.00069,"lift_pr":8.020577,"roc_auc":0.808943,"prec_at_100":0.0033,"prec_at_500":0.005983,"prec_at_1000":0.003995,"prec_at_5000":0.002066,"recall_at_100":0.001079,"recall_at_500":0.009709,"recall_at_1000":0.012945,"recall_at_5000":0.033441,"brier":0.006119,"ece":0.02124,"secs":32.666667,"median_lift":7.53,"pos_test":309.0,"n":3},"MLP":{"pr_auc":0.000666,"lift_pr":7.739666,"roc_auc":0.813046,"prec_at_100":0.0,"prec_at_500":0.002659,"prec_at_1000":0.001995,"prec_at_5000":0.0014,"recall_at_100":0.0,"recall_at_500":0.004315,"recall_at_1000":0.006472,"recall_at_5000":0.022654,"brier":0.164938,"ece":0.250495,"secs":15.333333,"median_lift":7.95,"pos_test":309.0,"n":3},"FTT":{"pr_auc":0.00038,"lift_pr":4.419386,"roc_auc":0.78593,"prec_at_100":0.0,"prec_at_500":0.000665,"prec_at_1000":0.000998,"prec_at_5000":0.000666,"recall_at_100":0.0,"recall_at_500":0.001079,"recall_at_1000":0.003236,"recall_at_5000":0.010787,"brier":0.310748,"ece":0.482699,"secs":112.666667,"median_lift":4.06,"pos_test":309.0,"n":3},"CNNRNN":{"pr_auc":0.000487,"lift_pr":5.657078,"roc_auc":0.799979,"prec_at_100":0.0033,"prec_at_500":0.000665,"prec_at_1000":0.001331,"prec_at_5000":0.001466,"recall_at_100":0.001079,"recall_at_500":0.001079,"recall_at_1000":0.004315,"recall_at_5000":0.023732,"brier":0.252158,"ece":0.389378,"secs":55.0,"median_lift":5.52,"pos_test":309.0,"n":3},"AttnCNNRNN":{"pr_auc":0.000478,"lift_pr":5.551718,"roc_auc":0.79938,"prec_at_100":0.0,"prec_at_500":0.002659,"prec_at_1000":0.001663,"prec_at_5000":0.001733,"recall_at_100":0.0,"recall_at_500":0.004315,"recall_at_1000":0.005394,"recall_at_5000":0.028047,"brier":0.288569,"ece":0.435696,"secs":63.666667,"median_lift":5.06,"pos_test":309.0,"n":3}}},"folds":{"partd_grouped":{"LogReg":[10.37,5.95,7.29,5.5,6.82,5.79,7.6,6.61,8.83,7.36,7.05,7.44,5.37,7.75,8.46],"LightGBM":[16.16,11.08,24.72,13.82,10.88,47.29,9.82,8.7,39.82,11.3,12.37,27.91,10.02,10.0,13.86],"XGBoost":[20.57,10.55,9.57,24.98,20.75,10.25,10.75,10.46,17.89,13.29,29.09,12.32,8.71,8.3,9.97],"MLP":[11.53,18.09,17.62,8.09,11.61,5.99,8.6,9.62,13.46,5.3,9.03,5.95,5.99,7.61,12.15],"FTT":[11.27,5.67,18.72,4.34,5.32,5.93,6.86,5.61,4.41,5.34,6.11,5.1,5.73,6.18,6.72],"CNNRNN":[10.61,5.78,7.59,4.62,5.82,5.92,6.46,5.55,17.84,7.7,7.09,5.12,4.83,7.1,22.27],"AttnCNNRNN":[7.57,6.24,4.07,5.17,4.7,5.98,7.5,9.45,19.52,5.71,10.24,3.99,5.06,5.2,6.98]},"partd_temporal":{"LogReg":[6.11,5.97,6.2],"LightGBM":[6.92,6.76,6.46],"XGBoost":[6.36,5.97,6.23],"MLP":[5.99,7.27,6.67],"FTT":[3.83,6.25,5.33],"CNNRNN":[3.86,6.34,2.25],"AttnCNNRNN":[5.31,8.07,4.73]},"phys_grouped":{"LogReg":[9.87,7.62,73.96,8.71,8.98,9.51,7.16,9.77,6.35,102.65,11.55,7.39,7.03,41.42,13.91],"LightGBM":[18.12,13.09,13.52,14.63,10.54,27.34,13.63,14.13,64.09,9.21,14.19,14.19,46.77,9.09,11.31],"XGBoost":[16.82,14.58,10.78,13.42,10.65,17.92,14.53,10.84,12.85,13.38,16.4,44.28,9.24,7.94,11.48],"MLP":[10.79,7.52,16.03,9.67,12.72,12.2,10.67,12.35,7.79,18.91,12.49,10.72,8.3,7.38,17.62],"FTT":[11.57,8.1,7.53,7.73,9.59,10.11,6.55,5.11,11.17,8.02,9.44,5.51,15.91,6.68,48.83],"CNNRNN":[12.76,6.93,12.79,5.12,7.92,12.88,10.1,6.59,12.33,5.76,1.93,7.18,6.41,7.2,9.22],"AttnCNNRNN":[10.48,7.87,8.98,10.85,9.94,18.09,13.68,7.24,5.76,11.25,13.23,7.38,5.09,7.41,5.07]},"phys_temporal":{"LogReg":[6.71,7.51,5.43],"LightGBM":[7.99,8.6,7.37],"XGBoost":[9.11,7.53,7.42],"MLP":[8.32,6.94,7.95],"FTT":[5.38,3.82,4.06],"CNNRNN":[4.45,5.52,7.0],"AttnCNNRNN":[5.06,6.74,4.86]}},"order":{"phys":{"CNNRNN":[[12.76,8.94,16.95],[6.93,6.91,8.2],[12.79,7.45,14.83],[5.12,7.41,12.16],[7.92,9.33,12.17]],"AttnCNNRNN":[[10.48,11.11,11.03],[7.87,7.49,6.86],[8.98,15.71,6.32],[10.85,10.54,14.15],[9.94,8.03,12.5]]},"partd":{"CNNRNN":[[10.61,39.55,5.05],[5.78,5.34,6.87],[7.59,6.92,3.96],[4.62,3.93,7.93],[5.82,10.23,21.66]],"AttnCNNRNN":[[7.57,13.45,11.43],[6.24,5.27,4.32],[4.07,7.46,17.9],[5.17,8.32,18.29],[4.7,9.2,10.45]]}},"att":{"phys":{"rho_att_shap":[0.103,0.376,0.141,0.171,0.61,0.287,0.27,0.154,0.155,0.259,0.096,0.242,0.151,-0.134,0.117],"rho_att_perm":[0.076,0.226,0.296,0.057,0.304,0.025,0.024,-0.084,0.307,-0.009,0.28,0.458,0.153,0.001,0.122],"rho_att_abl":[0.106,0.371,0.376,0.102,-0.013,-0.066,0.075,-0.021,0.239,-0.015,0.191,0.392,0.171,-0.011,0.018],"rho_perm_abl":[0.343,0.437,0.842,0.675,0.576,0.853,0.792,0.76,0.812,0.577,0.891,0.767,0.613,0.53,0.649],"att_position_corr":[0.806,0.073,0.236,-0.285,-0.057,0.406,0.779,0.33,0.559,0.687,0.368,0.158,0.801,0.628,0.315]},"partd":{"rho_att_shap":[0.659,0.792,0.016,0.539,0.327,0.315,0.779,0.771,0.154,0.383,0.511,0.17,0.545,0.546,0.018],"rho_att_perm":[0.424,0.318,-0.096,0.161,0.398,0.239,-0.13,0.064,0.167,0.302,0.152,0.064,0.086,0.203,0.117],"rho_att_abl":[0.301,0.266,0.004,0.129,0.123,0.294,-0.024,0.174,0.329,0.022,0.284,-0.066,0.065,0.196,-0.027],"rho_perm_abl":[0.551,0.942,0.562,0.662,0.662,0.823,0.897,0.633,0.811,0.587,0.695,0.823,0.498,0.743,0.838],"att_position_corr":[0.248,-0.315,0.675,0.515,0.38,0.283,0.212,-0.321,0.119,0.164,0.263,0.48,0.518,0.271,0.663]}},"lc":{"LogReg":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.7819,0.8049,0.8293,0.8479],"lift":[4.68,5.84,8.67,8.98]},"LightGBM":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.7621,0.7699,0.8113,0.8298],"lift":[5.36,9.47,10.4,13.52]},"XGBoost":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.7599,0.7658,0.792,0.8147],"lift":[11.19,7.94,9.57,13.42]},"MLP":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.7749,0.7935,0.8066,0.8302],"lift":[5.5,9.92,9.66,10.79]},"FTT":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.739,0.7404,0.793,0.8284],"lift":[3.47,4.5,5.75,8.1]},"AttnCNNRNN":{"frac":[0.1,0.25,0.5,1.0],"roc":[0.717,0.7702,0.8048,0.8347],"lift":[2.78,4.62,6.23,9.94]}},"conf":{"phys_1000":{"LogReg":[2.1,999.5,289.3],"LightGBM":[5.7,996.0,285.7],"XGBoost":[7.1,994.4,284.3],"MLP":[4.1,997.6,287.3],"FTT":[3.3,998.1,288.1],"CNNRNN":[3.5,997.9,287.9],"AttnCNNRNN":[3.5,997.9,287.9]},"phys_5000":{"LogReg":[10.3,4991.5,281.1],"LightGBM":[20.5,4980.8,270.9],"XGBoost":[20.1,4981.3,271.3],"MLP":[16.9,4984.5,274.5],"FTT":[11.9,4989.9,279.5],"CNNRNN":[12.8,4988.3,278.6],"AttnCNNRNN":[14.1,4987.5,277.3]},"partd_1000":{"LogReg":[3.9,997.3,438.9],"LightGBM":[9.9,991.2,432.9],"XGBoost":[8.7,992.8,434.1],"MLP":[6.9,994.7,435.9],"FTT":[2.9,998.4,439.9],"CNNRNN":[4.8,996.5,438.0],"AttnCNNRNN":[3.5,998.4,439.3]},"partd_5000":{"LogReg":[17.1,4984.5,425.7],"LightGBM":[23.4,4977.6,419.4],"XGBoost":[24.5,4977.3,418.3],"MLP":[19.8,4981.9,423.0],"FTT":[14.0,4987.2,428.8],"CNNRNN":[15.1,4986.7,427.7],"AttnCNNRNN":[13.2,4988.5,429.6]}}};
+const M=['LogReg','LightGBM','XGBoost','MLP','FTT','CNNRNN','AttnCNNRNN'];
+const NM={LogReg:'Logistic regression',LightGBM:'LightGBM',XGBoost:'XGBoost',MLP:'MLP',FTT:'FT-Transformer',CNNRNN:'CNN-RNN',AttnCNNRNN:'Attention CNN-RNN'};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const COL={LogReg:'--lin',LightGBM:'--tree',XGBoost:'--tree',MLP:'--mlp',FTT:'--ftt',CNNRNN:'--seq',AttnCNNRNN:'--att'};
+const KS=[100,500,1000,5000];
+const st={ds:'phys',des:'grouped',metric:'lift_pr',k:2,ds2:'phys',k2:'1000',ds3:'phys',ds4:'phys',lcm:'roc'};
+const fmt=(v,m)=>m==='roc_auc'?v.toFixed(3):m==='ece'?v.toFixed(2):m==='secs'?Math.round(v):(m==='prec'||m==='recall')?(100*v).toFixed(2)+'%':v.toFixed(1);
+const el=(t,a={},txt)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);if(txt!==undefined)e.textContent=txt;return e};
+function seg(id,key,cb){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('on'));b.classList.add('on');st[key]=b.dataset.v;cb()})}
+function bench(){
+  const k=st.ds+'_'+st.des, B=D.bench[k], m=st.metric, kk=KS[st.k];
+  const key=m==='prec'?'prec_at_'+kk:m==='recall'?'recall_at_'+kk:m;
+  const vals=M.map(x=>B[x][key]); const dots=m==='lift_pr'?M.map(x=>D.folds[k][x]):null;
+  const mx=dots?Math.max(...vals)*1.7:Math.max(...vals)*1.08, mn=m==='roc_auc'?Math.min(...vals)-0.05:0;
+  const W=900,rowH=38,L=170,R=80,H=M.length*rowH+30, s=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Benchmark chart'});
+  const x=v=>L+(v-mn)/(mx-mn)*(W-L-R);
+  for(let t=0;t<=4;t++){const v=mn+(mx-mn)*t/4;s.append(el('line',{x1:x(v),x2:x(v),y1:0,y2:H-24,stroke:css('--border')}));s.append(el('text',{x:x(v),y:H-6,'text-anchor':'middle'},fmt(v,key.startsWith('prec')?'prec':key.startsWith('recall')?'recall':m)))}
+  M.forEach((mm,i)=>{const y=i*rowH+6;
+    s.append(el('text',{x:L-10,y:y+19,'text-anchor':'end',style:'fill:'+css('--text')},NM[mm]));
+    s.append(el('rect',{x:x(mn),y:y+4,width:Math.max(1,x(vals[i])-x(mn)),height:rowH-14,rx:4,fill:css(COL[mm]),opacity:.85}));
+    if(dots){let over=0;dots[i].forEach((d,j)=>{if(d>mx){over++;return}s.append(el('circle',{cx:x(d),cy:y+4+(rowH-14)/2+((j%5)-2)*2.2,r:2.6,fill:'#fff',opacity:.55}))});
+      if(over)s.append(el('text',{x:x(mx)-2,y:y+19,'text-anchor':'end',style:'font-size:10px'},'+'+over+' fold'+(over>1?'s':'')+' above ▸'));}
+    s.append(el('text',{x:W-R+8,y:y+19,style:'fill:#fff;font-weight:600'},fmt(vals[i],key.startsWith('prec')?'prec':key.startsWith('recall')?'recall':m)));});
+  document.getElementById('benchChart').replaceChildren(s);
+  document.getElementById('kbox').style.display=(m==='prec'||m==='recall')?'':'none';
+}
+function conf(){
+  const C=D.conf[st.ds2+'_'+st.k2];
+  let h='<table><tr><th>Model</th><th>Fraud cases found (TP)</th><th>False alarms (FP)</th><th>Fraud cases missed (FN)</th><th>Hit rate</th></tr>';
+  const best=Math.max(...M.map(m=>C[m][0]));
+  M.forEach(m=>{const [tp,fp,fn]=C[m];h+=`<tr><td><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${css(COL[m])};margin-right:6px"></i>${NM[m]}</td><td style="${tp===best?'color:#fff;font-weight:700':''}">${tp.toFixed(1)}</td><td>${Math.round(fp).toLocaleString()}</td><td>${Math.round(fn)}</td><td>${(100*tp/(+st.k2)).toFixed(2)}%</td></tr>`});
+  document.getElementById('confTable').innerHTML=h+'</table>';
+}
+function order(){
+  const O=D.order[st.ds3], all=[...O.CNNRNN.flat(),...O.AttnCNNRNN.flat()], mx=Math.max(...all)*1.1;
+  const W=900,H=300,L=50,B=30,s=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Feature order sensitivity'});
+  const y=v=>H-B-(v/mx)*(H-B-10), x=f=>L+(f+.5)*(W-L)/5;
+  for(let t=0;t<=4;t++){const v=mx*t/4;s.append(el('line',{x1:L,x2:W,y1:y(v),y2:y(v),stroke:css('--border')}));s.append(el('text',{x:L-8,y:y(v)+4,'text-anchor':'end'},v.toFixed(0)))}
+  [['CNNRNN','--seq',-18],['AttnCNNRNN','--att',18]].forEach(([m,c,dx])=>O[m].forEach((v,f)=>{if(!v.length)return;const cx=x(f)+dx;
+    s.append(el('line',{x1:cx,x2:cx,y1:y(Math.min(...v)),y2:y(Math.max(...v)),stroke:css(c),'stroke-width':3,opacity:.6}));
+    v.forEach(d=>s.append(el('circle',{cx,cy:y(d),r:5,fill:css(c)})));
+    s.append(el('text',{x:cx,y:y(Math.max(...v))-8,'text-anchor':'middle',style:'font-size:10px'},(Math.max(...v)/Math.min(...v)).toFixed(1)+'×'))}));
+  for(let f=0;f<5;f++)s.append(el('text',{x:x(f),y:H-8,'text-anchor':'middle'},'Fold '+(f+1)));
+  s.append(el('text',{x:12,y:H/2,transform:`rotate(-90 12 ${H/2})`,'text-anchor':'middle'},'PR-AUC lift'));
+  document.getElementById('orderChart').replaceChildren(s);
+}
+function att(){
+  const A=D.att[st.ds4], P=[['rho_att_shap','Attention vs SHAP','--att'],['rho_att_perm','Attention vs permutation','--att'],['rho_att_abl','Attention vs ablation','--att'],['rho_perm_abl','Permutation vs ablation','--mlp'],['att_position_corr','Attention vs column position','--lin']];
+  const W=900,rowH=46,L=210,R=40,H=P.length*rowH+30,s=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Attention faithfulness'});
+  const x=v=>L+(v+0.4)/1.4*(W-L-R);
+  [-0.4,0,0.2,0.4,0.6,0.8,1].forEach(v=>{s.append(el('line',{x1:x(v),x2:x(v),y1:0,y2:H-24,stroke:v===0?css('--text2'):css('--border')}));s.append(el('text',{x:x(v),y:H-6,'text-anchor':'middle'},v.toFixed(1)))});
+  P.forEach(([k,lab,c],i)=>{const v=A[k].slice().sort((a,b)=>a-b),y=i*rowH+rowH/2,med=v[Math.floor(v.length/2)];
+    s.append(el('text',{x:L-10,y:y+4,'text-anchor':'end',style:'fill:'+css('--text')},lab));
+    s.append(el('line',{x1:x(v[0]),x2:x(v[v.length-1]),y1:y,y2:y,stroke:css(c),opacity:.4,'stroke-width':2}));
+    v.forEach((d,j)=>s.append(el('circle',{cx:x(d),cy:y+((j%3)-1)*5,r:4,fill:css(c),opacity:.8})));
+    s.append(el('line',{x1:x(med),x2:x(med),y1:y-13,y2:y+13,stroke:'#fff','stroke-width':2}));
+    s.append(el('text',{x:W-R+4,y:y+4,style:'fill:#fff;font-weight:600'},med.toFixed(2)))});
+  document.getElementById('attChart').replaceChildren(s);
+}
+function lc(){
+  const ms=['LogReg','LightGBM','XGBoost','MLP','FTT','AttnCNNRNN'], key=st.lcm, all=ms.flatMap(m=>D.lc[m][key]);
+  const mn=Math.min(...all)*(key==='roc'?0.98:0.8), mx=Math.max(...all)*(key==='roc'?1.01:1.08);
+  const W=900,H=320,L=60,R=20,B=34,s=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Learning curve'});
+  const fr=[0.1,0.25,0.5,1], x=f=>L+(Math.log(f)-Math.log(0.1))/(Math.log(1)-Math.log(0.1))*(W-L-R), y=v=>H-B-(v-mn)/(mx-mn)*(H-B-10);
+  for(let t=0;t<=4;t++){const v=mn+(mx-mn)*t/4;s.append(el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:css('--border')}));s.append(el('text',{x:L-8,y:y(v)+4,'text-anchor':'end'},key==='roc'?v.toFixed(2):v.toFixed(0)))}
+  fr.forEach(f=>s.append(el('text',{x:x(f),y:H-10,'text-anchor':'middle'},(f*100)+'%')));
+  const cols={LogReg:'--lin',LightGBM:'--tree',XGBoost:'#2b7a55',MLP:'--mlp',FTT:'--ftt',AttnCNNRNN:'--att'};
+  ms.forEach(m=>{const c=cols[m].startsWith('--')?css(cols[m]):cols[m],v=D.lc[m][key],f=D.lc[m].frac;
+    s.append(el('polyline',{points:f.map((ff,i)=>x(ff)+','+y(v[i])).join(' '),fill:'none',stroke:c,'stroke-width':2.5}));
+    f.forEach((ff,i)=>s.append(el('circle',{cx:x(ff),cy:y(v[i]),r:4,fill:c})))});
+  document.getElementById('lcChart').replaceChildren(s);
+  document.getElementById('lcLegend').innerHTML=ms.map(m=>`<span><i style="background:${cols[m].startsWith('--')?css(cols[m]):cols[m]}"></i>${NM[m]}</span>`).join('');
+}
+seg('ds','ds',bench);seg('des','des',bench);seg('ds2','ds2',conf);seg('k2','k2',conf);seg('ds3','ds3',order);seg('ds4','ds4',att);seg('lcm','lcm',lc);
+document.getElementById('metric').onchange=e=>{st.metric=e.target.value;bench()};
+document.getElementById('k').oninput=e=>{st.k=+e.target.value;document.getElementById('kval').textContent=KS[st.k].toLocaleString();bench()};
+bench();conf();order();att();lc();
+</script>
+</body>
+</html>
