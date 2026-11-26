@@ -46,6 +46,7 @@ th{color:var(--text2);font-weight:500}
 .find div{background:var(--bg3);border-radius:10px;padding:1rem;font-size:.88rem;color:var(--text2)}
 .find b{color:#fff;display:block;margin-bottom:.3rem}
 .warn{border-left:3px solid var(--att);background:var(--bg3);padding:.9rem 1rem;border-radius:6px;font-size:.85rem;color:var(--text2)}
+.bar{display:inline-block;height:8px;border-radius:4px;vertical-align:middle;margin-right:8px}
 .legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.78rem;color:var(--text2);margin-top:.4rem}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
 footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;border-top:1px solid var(--border)}
@@ -54,11 +55,11 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 </head>
 <body>
 <nav><a class="nav-brand" href="../../">Zia Ullah</a>
-<ul class="nav-links"><li><a href="#bench">Benchmark</a></li><li><a href="#budget">Audit budget</a></li><li><a href="#order">Feature order</a></li><li><a href="#attention">Attention</a></li><li><a href="#lc">Learning curve</a></li><li><a href="../../#academic">← Portfolio</a></li></ul></nav>
+<ul class="nav-links"><li><a href="#bench">Benchmark</a></li><li><a href="#budget">Audit budget</a></li><li><a href="#order">Feature order</a></li><li><a href="#attention">Attention</a></li><li><a href="#lc">Learning curve</a></li><li><a href="#history">Histories</a></li><li><a href="#use">Benchmark</a></li><li><a href="../../#academic">← Portfolio</a></li></ul></nav>
 <main>
 <span class="tag">Research · Healthcare fraud</span><span class="tag">Deep learning · Explainability</span><span class="tag">Manuscript in preparation</span>
 <h1>Do sequence and attention deep learning models help detect confirmed Medicare provider fraud?</h1>
-<p class="lead">A leakage-free benchmark of seven models on public CMS Medicare data linked to <b>confirmed</b> fraud exclusions from the U.S. OIG exclusion list (LEIE). Explore the results below — every number comes from the result files in the public repository.</p>
+<p class="lead">A leakage-controlled benchmark of seven models on public CMS Medicare data linked to <b>confirmed</b> fraud exclusions from the U.S. OIG exclusion list (LEIE). Explore the results below — every number comes from the result files in the public repository.</p>
 <div class="btns"><a class="btn btn-primary" href="https://github.com/ziaongit/leie-dl-fraud-benchmark" target="_blank" rel="noopener">Code &amp; results on GitHub →</a><a class="btn" href="#method">How it was evaluated</a></div>
 <div class="stats">
 <div class="stat"><b>~27M</b><span>provider-years (Physician 2013–2024 + Part D 2013–2023)</span></div>
@@ -72,6 +73,9 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <div><b>Trees still win</b>LightGBM and XGBoost ranked confirmed fraud best. The CNN-RNN and attention CNN-RNN beat LightGBM in at most 2 of 15 folds.</div>
 <div><b>Order matters for sequence models</b>Shuffling the order of the same columns changed CNN-RNN PR-AUC by up to 7.7× on one fold.</div>
 <div><b>Attention is not an explanation</b>Attention agreed weakly with permutation and ablation importance (median ρ 0.10–0.16) and partly tracked column position.</div>
+<div><b>History beats architecture</b>Giving models each provider’s 3 previous years of billing roughly tripled enrichment — and on these genuine sequences a GRU became competitive with the trees.</div>
+<div><b>More tuning narrows, not closes</b>With 4× the tuning budget the deep models improved, but LightGBM still found the most fraud in the top 1,000.</div>
+<div><b>Cases or dollars</b>The trees find the most fraud cases; an MLP captures the most fraud-linked payments by flagging larger billers.</div>
 <div><b>Realistic performance is modest</b>Lift of 15–20× over random selection, but precision stays below 1% at every useful audit budget.</div>
 </div>
 </section>
@@ -122,12 +126,47 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <div class="legend" id="lcLegend"></div>
 </section>
 
+<section id="history">
+<h2>6 · Sequence models on genuine sequences: provider billing histories</h2>
+<p class="sub">The same models were given each provider’s own billing in the three previous years (years t–3 to t), so that the order of the sequence is real. Physician data, provider-grouped, the same 5 folds and tuning budget.</p>
+<table><tr><th>Model and input</th><th>PR-AUC lift (median)</th><th>ROC-AUC</th><th>Precision in top 1,000</th></tr><tr><td>LightGBM, year t only (as in sections 1–5)</td><td><span class="bar" style="width:32px;background:var(--lin)"></span>13.5</td><td>0.830</td><td>0.60%</td></tr><tr><td>LightGBM, 4-year history</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>38.4</td><td>0.842</td><td>1.16%</td></tr><tr><td>MLP, 4-year history</td><td><span class="bar" style="width:46px;background:var(--mlp)"></span>19.5</td><td>0.866</td><td>0.96%</td></tr><tr><td>GRU over years (genuine sequence)</td><td><span class="bar" style="width:61px;background:var(--seq)"></span>26.1</td><td>0.874</td><td>1.24%</td></tr><tr><td>Attention GRU over years</td><td><span class="bar" style="width:61px;background:var(--att)"></span>26.2</td><td>0.873</td><td>0.76%</td></tr></table>
+<p class="note">History is the largest gain in the study: it roughly triples the enrichment of LightGBM, and every history model beats the year-t model in every fold. On these genuine sequences the GRU is competitive with the trees (best ROC-AUC and top-1,000 precision; LightGBM keeps the higher median lift) and beats the MLP given the same information without order. Attention over years adds nothing.</p>
+</section>
+
+<section id="tuning">
+<h2>7 · More tuning for the deep models</h2>
+<p class="sub">Four times the random-search budget (24 configurations), up to 30 epochs and the published FT-Transformer default size, on the same 5 Physician folds.</p>
+<table><tr><th>Model</th><th>Median lift, main (6 configs)</th><th>Median lift, 24 configs</th><th>Precision in top 1,000 (24 configs)</th></tr><tr><td>LightGBM</td><td>13.5</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>14.0</td><td>0.78%</td></tr><tr><td>MLP</td><td>10.8</td><td><span class="bar" style="width:77px;background:var(--mlp)"></span>12.0</td><td>0.46%</td></tr><tr><td>Attention CNN-RNN</td><td>9.9</td><td><span class="bar" style="width:78px;background:var(--att)"></span>12.1</td><td>0.36%</td></tr><tr><td>FT-Transformer</td><td>8.1</td><td><span class="bar" style="width:55px;background:var(--ftt)"></span>8.6</td><td>0.30%</td></tr></table>
+<p class="note">More tuning narrows the gap in overall ranking, but at the top of the list — where audits happen — LightGBM still finds 1.7–2.6 times as many confirmed cases.</p>
+</section>
+
+<section id="dollars">
+<h2>8 · Cases or dollars?</h2>
+<p class="sub">Median Medicare payments of confirmed-fraud provider-years among the top 1,000 flagged, per test fold (provider-grouped, 15 folds). These are payments of providers later excluded for fraud, not the fraudulent amounts themselves.</p>
+<table><tr><th>Model</th><th>Physician</th><th>Part D</th></tr><tr><td>Logistic regression</td><td><span class="bar" style="width:11px;background:var(--lin)"></span>$0.29M</td><td><span class="bar" style="width:31px;background:var(--lin)"></span>$4.51M</td></tr><tr><td>LightGBM</td><td><span class="bar" style="width:55px;background:var(--tree)"></span>$1.51M</td><td><span class="bar" style="width:64px;background:var(--tree)"></span>$9.32M</td></tr><tr><td>XGBoost</td><td><span class="bar" style="width:63px;background:var(--tree)"></span>$1.71M</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>$13.03M</td></tr><tr><td>MLP</td><td><span class="bar" style="width:90px;background:var(--mlp)"></span>$2.45M</td><td><span class="bar" style="width:84px;background:var(--mlp)"></span>$12.13M</td></tr><tr><td>FT-Transformer</td><td><span class="bar" style="width:31px;background:var(--ftt)"></span>$0.85M</td><td><span class="bar" style="width:24px;background:var(--ftt)"></span>$3.42M</td></tr><tr><td>CNN-RNN</td><td><span class="bar" style="width:42px;background:var(--seq)"></span>$1.15M</td><td><span class="bar" style="width:10px;background:var(--seq)"></span>$1.41M</td></tr><tr><td>Attention CNN-RNN</td><td><span class="bar" style="width:35px;background:var(--att)"></span>$0.95M</td><td><span class="bar" style="width:18px;background:var(--att)"></span>$2.59M</td></tr></table>
+<p class="note">The MLP captures the most fraud-linked dollars because it flags larger billers (its top 1,000 covers about six times more total billing than LightGBM’s on Physician data). The trees find the most fraud cases; sequence and attention models are weakest on both measures.</p>
+</section>
+
+<section id="calibration">
+<h2>9 · Probabilities need recalibration — and it works</h2>
+<div class="find">
+<div><b>Raw scores overstate risk</b>Trained with class weights, every model predicts average fraud probabilities of 0.12–0.55 when the true rate is about 0.0001.</div>
+<div><b>Isotonic recalibration fixes it</b>Fitted on labelled hold-out data, it brings every model’s calibration error to about 14–22% of the base rate. Platt scaling is less accurate but keeps the ranking exactly.</div>
+</div>
+</section>
+
+<section id="use">
+<h2>10 · Use it as a benchmark</h2>
+<p class="sub">The splits are deterministic (provider fold = crc32(NPI + repeat) mod 5; temporal = train 2013–2019, test 2020–2022), and <code>benchmark/evaluate.py</code> reproduces every metric on this page from a file of predictions. Test a new model on the same confirmed labels and add it to the leaderboard.</p>
+<div class="btns"><a class="btn btn-primary" href="https://github.com/ziaongit/leie-dl-fraud-benchmark/blob/main/LEADERBOARD.md" target="_blank" rel="noopener">Leaderboard →</a><a class="btn" href="https://github.com/ziaongit/leie-dl-fraud-benchmark#use-it-as-a-benchmark" target="_blank" rel="noopener">How to evaluate a model</a></div>
+</section>
+
 <section id="method">
 <h2>How it was evaluated</h2>
 <div class="find">
 <div><b>Confirmed labels</b>Positive = provider-year 1–3 years before a fraud-related LEIE exclusion (§1128(a)(1), (a)(3), (b)(7)). Negative = never in the LEIE. Nothing in the features is derived from the label.</div>
 <div><b>No leakage</b>No provider appears in both training and test data. All preprocessing is fitted on training rows only. No SMOTE — class weights instead.</div>
-<div><b>Fair comparison</b>Every model gets 6 tuned configurations per split, chosen on an inner provider-grouped validation set. Same GPU, epochs and early stopping for all neural models.</div>
+<div><b>Fair comparison</b>Every model gets 6 tuned configurations per split, chosen on an inner provider-grouped validation set. Same GPU, epochs and early stopping for all neural models. A check with 4× the budget is in section 7.</div>
 <div><b>Honest statistics</b>Nadeau–Bengio corrected tests with Holm adjustment, effect sizes and equivalence tests. Fold-to-fold noise is large: on Part D, LightGBM finds significantly more fraud in the top 1,000 than three of the four deep models, while the other differences are not significant — so the conclusion also rests on consistent direction, audit-budget results and calibration.</div>
 </div>
 <p class="note" style="margin-top:1rem">Robustness checks in the paper, all seven models: label noise (hiding up to 50% of fraud cases; the trees keep the best top-1,000 precision), an independent New York State Medicaid exclusion list (every model transfers only moderately, ROC-AUC 0.70–0.76), learning curves and model combinations.</p>
