@@ -55,7 +55,7 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 </head>
 <body>
 <nav><a class="nav-brand" href="../../">Zia Ullah</a>
-<ul class="nav-links"><li><a href="#bench">Benchmark</a></li><li><a href="#budget">Audit budget</a></li><li><a href="#order">Feature order</a></li><li><a href="#attention">Attention</a></li><li><a href="#lc">Learning curve</a></li><li><a href="#history">Histories</a></li><li><a href="#use">Benchmark</a></li><li><a href="../../#academic">← Portfolio</a></li></ul></nav>
+<ul class="nav-links"><li><a href="#bench">Benchmark</a></li><li><a href="#budget">Audit budget</a></li><li><a href="#order">Feature order</a></li><li><a href="#attention">Attention</a></li><li><a href="#lc">Learning curve</a></li><li><a href="#history">Histories</a></li><li><a href="#states">32 states</a></li><li><a href="#deploy">Deployment</a></li><li><a href="#use">Benchmark</a></li><li><a href="../../#academic">← Portfolio</a></li></ul></nav>
 <main>
 <span class="tag">Research · Healthcare fraud</span><span class="tag">Deep learning · Explainability</span><span class="tag">Manuscript in preparation</span>
 <h1>Do sequence and attention deep learning models help detect confirmed Medicare provider fraud?</h1>
@@ -70,12 +70,14 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <section>
 <h2>Main findings</h2>
 <div class="find">
-<div><b>Trees still win</b>LightGBM and XGBoost ranked confirmed fraud best. The CNN-RNN and attention CNN-RNN beat LightGBM in at most 2 of 15 folds.</div>
-<div><b>Order matters for sequence models</b>Shuffling the order of the same columns changed CNN-RNN PR-AUC by up to 7.7× on one fold.</div>
+<div><b>Trees still win</b>LightGBM and XGBoost ranked confirmed fraud best. At the audit budget LightGBM found significantly more cases than the sequence, attention and transformer models (provider bootstrap; Bayesian probability up to 0.999).</div>
+<div><b>Order matters for sequence models</b>Shuffling the order of the same columns changed CNN-RNN PR-AUC by up to 7.8× on one fold.</div>
 <div><b>Attention is not an explanation</b>Attention agreed weakly with permutation and ablation importance (median ρ 0.10–0.16) and partly tracked column position.</div>
-<div><b>History beats architecture</b>Giving models each provider’s 3 previous years of billing roughly tripled enrichment — and on these genuine sequences a GRU became competitive with the trees.</div>
+<div><b>History beats architecture</b>Giving models each provider’s 3 previous years of billing raised enrichment 2.7–4.5× — and on these genuine sequences a GRU came close to the trees.</div>
 <div><b>More tuning narrows, not closes</b>With 4× the tuning budget the deep models improved, but LightGBM still found the most fraud in the top 1,000.</div>
 <div><b>Cases or dollars</b>The trees find the most fraud cases; an MLP captures the most fraud-linked payments by flagging larger billers.</div>
+<div><b>Holds on independent labels</b>Models trained on federal exclusions also flag providers excluded only by 32 state Medicaid programmes (ROC-AUC 0.64–0.73); no deep model transfers better.</div>
+<div><b>What a payer would gain</b>Retrained year by year, auditing the top 1,000 providers would have found 3–4 later-excluded providers a year — about 25× random — mostly 2+ years before exclusion.</div>
 <div><b>Realistic performance is modest</b>Lift of 15–20× over random selection, but precision stays below 1% at every useful audit budget.</div>
 </div>
 </section>
@@ -128,16 +130,16 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 
 <section id="history">
 <h2>6 · Sequence models on genuine sequences: provider billing histories</h2>
-<p class="sub">The same models were given each provider’s own billing in the three previous years (years t–3 to t), so that the order of the sequence is real. Physician data, provider-grouped, the same 5 folds and tuning budget.</p>
-<table><tr><th>Model and input</th><th>PR-AUC lift (median)</th><th>ROC-AUC</th><th>Precision in top 1,000</th></tr><tr><td>LightGBM, year t only (as in sections 1–5)</td><td><span class="bar" style="width:32px;background:var(--lin)"></span>13.5</td><td>0.830</td><td>0.60%</td></tr><tr><td>LightGBM, 4-year history</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>38.4</td><td>0.842</td><td>1.16%</td></tr><tr><td>MLP, 4-year history</td><td><span class="bar" style="width:46px;background:var(--mlp)"></span>19.5</td><td>0.866</td><td>0.96%</td></tr><tr><td>GRU over years (genuine sequence)</td><td><span class="bar" style="width:61px;background:var(--seq)"></span>26.1</td><td>0.874</td><td>1.24%</td></tr><tr><td>Attention GRU over years</td><td><span class="bar" style="width:61px;background:var(--att)"></span>26.2</td><td>0.873</td><td>0.76%</td></tr></table>
-<p class="note">History is the largest gain in the study: it roughly triples the enrichment of LightGBM, and every history model beats the year-t model in every fold. On these genuine sequences the GRU is competitive with the trees (best ROC-AUC and top-1,000 precision; LightGBM keeps the higher median lift) and beats the MLP given the same information without order. Attention over years adds nothing.</p>
+<p class="sub">The same models were given each provider’s own billing in the three previous years (years t–3 to t), so that the order of the sequence is real. Provider-grouped, 15 folds per data source, same tuning budget.</p>
+<table><tr><th>Model and input</th><th>Physician median lift</th><th>ROC-AUC</th><th>Top-1,000 precision</th><th>Part D median lift</th><th>ROC-AUC</th><th>Top-1,000 precision</th></tr><tr><td>LightGBM, year t only (as in sections 1–5)</td><td><span class="bar" style="width:23px;background:var(--lin)"></span>14.1</td><td>0.831</td><td>0.57%</td><td><span class="bar" style="width:20px;background:var(--lin)"></span>12.4</td><td>0.821</td><td>0.99%</td></tr><tr><td>LightGBM, 4-year history</td><td><span class="bar" style="width:62px;background:var(--tree)"></span>38.4</td><td>0.858</td><td>1.17%</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>55.7</td><td>0.858</td><td>2.68%</td></tr><tr><td>GRU over years (genuine sequence)</td><td><span class="bar" style="width:58px;background:var(--seq)"></span>36.1</td><td>0.868</td><td>1.26%</td><td><span class="bar" style="width:62px;background:var(--seq)"></span>38.6</td><td>0.856</td><td>2.20%</td></tr><tr><td>MLP, 4-year history</td><td><span class="bar" style="width:32px;background:var(--mlp)"></span>19.6</td><td>0.867</td><td>0.99%</td><td><span class="bar" style="width:59px;background:var(--mlp)"></span>36.5</td><td>0.851</td><td>2.02%</td></tr><tr><td>Attention GRU over years</td><td><span class="bar" style="width:34px;background:var(--att)"></span>21.0</td><td>0.863</td><td>0.81%</td><td><span class="bar" style="width:50px;background:var(--att)"></span>30.7</td><td>0.854</td><td>1.97%</td></tr></table>
+<p class="note">History is the largest gain in the study: it raises the enrichment of LightGBM 2.7× (Physician) and 4.5× (Part D) and doubles the confirmed cases in the top 1,000 (significant on both data sources). On these genuine sequences the GRU comes close to the trees — level with history-aware LightGBM on Physician, behind on Part D — and attention over years adds nothing.</p>
 </section>
 
 <section id="tuning">
 <h2>7 · More tuning for the deep models</h2>
-<p class="sub">Four times the random-search budget (24 configurations), up to 30 epochs and the published FT-Transformer default size, on the same 5 Physician folds.</p>
-<table><tr><th>Model</th><th>Median lift, main (6 configs)</th><th>Median lift, 24 configs</th><th>Precision in top 1,000 (24 configs)</th></tr><tr><td>LightGBM</td><td>13.5</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>14.0</td><td>0.78%</td></tr><tr><td>MLP</td><td>10.8</td><td><span class="bar" style="width:77px;background:var(--mlp)"></span>12.0</td><td>0.46%</td></tr><tr><td>Attention CNN-RNN</td><td>9.9</td><td><span class="bar" style="width:78px;background:var(--att)"></span>12.1</td><td>0.36%</td></tr><tr><td>FT-Transformer</td><td>8.1</td><td><span class="bar" style="width:55px;background:var(--ftt)"></span>8.6</td><td>0.30%</td></tr></table>
-<p class="note">More tuning narrows the gap in overall ranking, but at the top of the list — where audits happen — LightGBM still finds 1.7–2.6 times as many confirmed cases.</p>
+<p class="sub">Four times the random-search budget (24 configurations), up to 30 epochs and the published FT-Transformer default size; Physician data, 15 provider-grouped folds.</p>
+<table><tr><th>Model</th><th>Median lift, main (6 configs)</th><th>Median lift, 24 configs</th><th>Precision in top 1,000 (24 configs)</th></tr><tr><td>LightGBM</td><td>14.1</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>16.8</td><td>0.73%</td></tr><tr><td>MLP</td><td>10.8</td><td><span class="bar" style="width:64px;background:var(--mlp)"></span>12.0</td><td>0.46%</td></tr><tr><td>Attention CNN-RNN</td><td>9.0</td><td><span class="bar" style="width:54px;background:var(--att)"></span>10.1</td><td>0.39%</td></tr><tr><td>FT-Transformer (5 folds)</td><td>8.1</td><td><span class="bar" style="width:46px;background:var(--ftt)"></span>8.6</td><td>0.30%</td></tr></table>
+<p class="note">Every model improves with more tuning, but at the top of the list — where audits happen — LightGBM still finds 1.6–2.4 times as many confirmed cases as the deep models.</p>
 </section>
 
 <section id="dollars">
@@ -155,8 +157,22 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 </div>
 </section>
 
+<section id="states">
+<h2>10 · Independent check: 32 state Medicaid exclusion lists</h2>
+<p class="sub">Models trained on federal LEIE labels (2013–2019) were tested in 2020–2022 against providers excluded by a state Medicaid programme but never listed in the LEIE (343 Physician and 428 Part D provider-years, 32 states). Intervals in the paper (provider bootstrap) all lie above chance.</p>
+<table><tr><th>Model</th><th>Physician ROC-AUC</th><th>Physician lift</th><th>Part D ROC-AUC</th><th>Part D lift</th></tr><tr><td>LightGBM</td><td>0.72</td><td><span class="bar" style="width:55px;background:var(--tree)"></span>5.7</td><td>0.70</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>9.4</td></tr><tr><td>CNN-RNN</td><td>0.71</td><td><span class="bar" style="width:56px;background:var(--seq)"></span>5.9</td><td>0.70</td><td><span class="bar" style="width:38px;background:var(--seq)"></span>4.0</td></tr><tr><td>XGBoost</td><td>0.69</td><td><span class="bar" style="width:43px;background:var(--tree)"></span>4.5</td><td>0.71</td><td><span class="bar" style="width:45px;background:var(--tree)"></span>4.7</td></tr><tr><td>MLP</td><td>0.68</td><td><span class="bar" style="width:40px;background:var(--mlp)"></span>4.2</td><td>0.73</td><td><span class="bar" style="width:34px;background:var(--mlp)"></span>3.5</td></tr><tr><td>FT-Transformer</td><td>0.69</td><td><span class="bar" style="width:32px;background:var(--ftt)"></span>3.3</td><td>0.72</td><td><span class="bar" style="width:29px;background:var(--ftt)"></span>3.0</td></tr><tr><td>Attention CNN-RNN</td><td>0.64</td><td><span class="bar" style="width:31px;background:var(--att)"></span>3.2</td><td>0.69</td><td><span class="bar" style="width:24px;background:var(--att)"></span>2.5</td></tr><tr><td>Logistic regression</td><td>0.70</td><td><span class="bar" style="width:27px;background:var(--lin)"></span>2.8</td><td>0.72</td><td><span class="bar" style="width:33px;background:var(--lin)"></span>3.4</td></tr></table>
+<p class="note">The signal learned from federal fraud exclusions transfers to independently compiled sanctions, moderately (state lists also include non-fraud sanctions). No deep model transfers better than the trees; the attention CNN-RNN is weakest.</p>
+</section>
+
+<section id="deploy">
+<h2>11 · What would a payer gain? A deployment simulation</h2>
+<p class="sub">Each year from 2016 to 2022 the models were retrained on the exclusions known at that time and the top 1,000 providers of the year were “audited”. Confirmed cases found per year:</p>
+<table><tr><th>Model</th><th>Physician</th><th>Part D</th></tr><tr><td>XGBoost</td><td><span class="bar" style="width:68px;background:var(--tree)"></span>3.3</td><td><span class="bar" style="width:90px;background:var(--tree)"></span>4.4</td></tr><tr><td>LightGBM</td><td><span class="bar" style="width:55px;background:var(--tree)"></span>2.7</td><td><span class="bar" style="width:82px;background:var(--tree)"></span>4.0</td></tr><tr><td>MLP</td><td><span class="bar" style="width:41px;background:var(--mlp)"></span>2.0</td><td><span class="bar" style="width:70px;background:var(--mlp)"></span>3.4</td></tr><tr><td>Logistic regression</td><td><span class="bar" style="width:35px;background:var(--lin)"></span>1.7</td><td><span class="bar" style="width:59px;background:var(--lin)"></span>2.9</td></tr><tr><td>Random audits</td><td><span class="bar" style="width:4px;background:var(--lin)"></span>0.11</td><td><span class="bar" style="width:4px;background:var(--lin)"></span>0.17</td></tr></table>
+<p class="note">About 25× more confirmed cases than random audits, at roughly 230–370 audits per case, and most were flagged two or more years before exclusion. Public CMS data appear 1.5–2 years late, which uses up much of that lead time — payers with their own claims data would keep it.</p>
+</section>
+
 <section id="use">
-<h2>10 · Use it as a benchmark</h2>
+<h2>12 · Use it as a benchmark</h2>
 <p class="sub">The splits are deterministic (provider fold = crc32(NPI + repeat) mod 5; temporal = train 2013–2019, test 2020–2022), and <code>benchmark/evaluate.py</code> reproduces every metric on this page from a file of predictions. Test a new model on the same confirmed labels and add it to the leaderboard.</p>
 <div class="btns"><a class="btn btn-primary" href="https://github.com/ziaongit/leie-dl-fraud-benchmark/blob/main/LEADERBOARD.md" target="_blank" rel="noopener">Leaderboard →</a><a class="btn" href="https://github.com/ziaongit/leie-dl-fraud-benchmark#use-it-as-a-benchmark" target="_blank" rel="noopener">How to evaluate a model</a></div>
 </section>
@@ -169,7 +185,7 @@ footer{text-align:center;color:var(--text2);font-size:.8rem;padding:2rem 1rem;bo
 <div><b>Fair comparison</b>Every model gets 6 tuned configurations per split, chosen on an inner provider-grouped validation set. Same GPU, epochs and early stopping for all neural models. A check with 4× the budget is in section 7.</div>
 <div><b>Honest statistics</b>Nadeau–Bengio corrected tests with Holm adjustment, effect sizes and equivalence tests. Fold-to-fold noise is large: on Part D, LightGBM finds significantly more fraud in the top 1,000 than three of the four deep models, while the other differences are not significant — so the conclusion also rests on consistent direction, audit-budget results and calibration.</div>
 </div>
-<p class="note" style="margin-top:1rem">Robustness checks in the paper, all seven models: label noise (hiding up to 50% of fraud cases; the trees keep the best top-1,000 precision), an independent New York State Medicaid exclusion list (every model transfers only moderately, ROC-AUC 0.70–0.76), learning curves and model combinations.</p>
+<p class="note" style="margin-top:1rem">Robustness checks in the paper, all seven models: label noise (hiding up to 50% of fraud cases; the trees keep the best top-1,000 precision), independent exclusion lists of 32 state Medicaid programmes (every model transfers moderately, ROC-AUC 0.64–0.73), complementary statistics (provider bootstrap, Bayesian correlated t-test), a year-by-year deployment simulation, learning curves and model combinations.</p>
 <div class="warn" style="margin-top:1rem">This page shows aggregate research results only. It is not a fraud-scoring tool and does not rate any individual provider: at this prevalence even the best model's precision is below 1%, so a high score is never evidence of fraud.</div>
 </section>
 </main>
